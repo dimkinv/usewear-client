@@ -1,25 +1,41 @@
 import React from 'react';
-import logo from './logo.svg';
+import { AppBar, Toolbar, Typography, createMuiTheme, ThemeProvider, Grid } from '@material-ui/core';
 import './App.css';
+import { green } from '@material-ui/core/colors';
+import { SmartGroup } from './dynamic-forms/smart-group/SmartGroup';
+
+const darkTheme = createMuiTheme({
+  palette: {
+    type: 'dark',
+    primary: green,
+    secondary: {
+      main: '#3949ab',
+    },
+  },
+});
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={darkTheme}>
+      <AppBar position="relative" color="secondary">
+        <Toolbar>
+          <Typography variant="h6" color="inherit" noWrap>
+            Usewear
+          </Typography>
+        </Toolbar>
+      </AppBar>
+      <Grid container spacing={3}>
+        <Grid item md={4} xs={12}>
+          <SmartGroup />
+        </Grid>
+        <Grid item md={4} xs={12}>
+
+        </Grid>
+        <Grid item md={4} xs={12}>
+
+        </Grid>
+      </Grid>
+    </ThemeProvider>
   );
 }
 
