@@ -51,9 +51,11 @@ function renderComponent(props: PropsWithChildren<SmartInputProps>, personName: 
         <InputLabel id={`label_${uniqueControlId}`}>{props.label}</InputLabel>
         <Select
           fullWidth
+          placeholder={props.placeholder}
           labelId={`label_${uniqueControlId}`}
           id={uniqueControlId}
-          value={10}
+          value={props.value}
+          onChange={event => props.onChange(props.propertyName, event.target.value as string)}
         >
           {props.options?.map((value) => (
             <MenuItem key={value} value={value}>
@@ -63,6 +65,6 @@ function renderComponent(props: PropsWithChildren<SmartInputProps>, personName: 
         </Select>
       </FormControl>
     case SmartInputType.multi_select:
-      return <MultiSelect options={props.options!} id={uniqueControlId} />
+      return <MultiSelect smartInputProps={props} />
   }
 }

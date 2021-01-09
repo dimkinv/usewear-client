@@ -1,9 +1,9 @@
 import { FormControl, InputLabel, Chip, Select, MenuItem, makeStyles } from "@material-ui/core";
 import { useState } from "react";
+import { SmartInputProps } from "./SmartInput";
 
 export interface MultiSelectProps {
-  options: string[];
-  id: string;
+  smartInputProps: SmartInputProps
 }
 
 const useStyles = makeStyles({
@@ -14,21 +14,21 @@ const useStyles = makeStyles({
 });
 
 export const MultiSelect: React.FC<MultiSelectProps> = (props) => {
-  const [values, setValues] = useState<string[]>([]);
+  const {smartInputProps} = props
   const classes = useStyles();
-
+  
   return (
     <FormControl fullWidth>
-      <InputLabel id={`label_${props.id}`}>Chip</InputLabel>
+      <InputLabel id={`label_${smartInputProps.id}`}>Chip</InputLabel>
       <Select
-        labelId={`label_${props.id}`}
-        id={props.id}
+        labelId={`label_${smartInputProps.id}`}
+        id={smartInputProps.id}
         multiple
-        value={values}
-        onChange={event => setValues(event.target.value as string[])}
+        value={smartInputProps.value}
+        onChange={event => smartInputProps.onChange(smartInputProps.propertyName, event.target.value as string[])}
         renderValue={renderValues}
       >
-        {props.options.map((value) => (
+        {smartInputProps.options?.map((value) => (
           <MenuItem key={value} value={value}>
             {value}
           </MenuItem>

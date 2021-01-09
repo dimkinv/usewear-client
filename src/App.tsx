@@ -27,8 +27,30 @@ const testData: FormField[] = [
     inputType: SmartInputType.text,
     label: 'Test 2',
     propertyName: 'test1',
-    placeholder: 'Test1 Placeholder',
+    placeholder: 'Test2 Placeholder',
     value: 'something1'
+  },
+  {
+    inputType: SmartInputType.select,
+    label: 'Test 3',
+    propertyName: 'test3',
+    placeholder: 'Test1 Placeholder',
+    value: 'option2',
+    options:[
+      'option1',
+      'option2'
+    ]
+  },
+  {
+    inputType: SmartInputType.multi_select,
+    label: 'Test 4',
+    propertyName: 'test4',
+    placeholder: 'Test2 Placeholder',
+    value: ['option2'],
+    options:[
+      'option1',
+      'option2'
+    ]
   }
 ];
 

@@ -33,6 +33,7 @@ export const SmartGroup: React.FC<SmartGroupProps> = (props) => {
                             id={field.propertyName}
                             propertyName={field.propertyName}
                             value={fieldsState![field.propertyName]}
+                            options={field.options}
                             onChange={(fieldName, value) => setFieldsState({
                                 ...fieldsState,
                                 [fieldName]: value
