@@ -3,6 +3,7 @@ import { AppBar, Toolbar, Typography, createMuiTheme, ThemeProvider, Grid } from
 import './App.css';
 import { green } from '@material-ui/core/colors';
 import { SmartGroup } from './dynamic-forms/smart-group/SmartGroup';
+import { FormField, SmartInputType } from './dynamic-forms/smart-form.model';
 
 const darkTheme = createMuiTheme({
   palette: {
@@ -13,6 +14,23 @@ const darkTheme = createMuiTheme({
     },
   },
 });
+
+const testData: FormField[] = [
+  {
+    inputType: SmartInputType.text,
+    label: 'Test 1',
+    propertyName: 'test',
+    placeholder: 'Test Placeholder',
+    value: 'something'
+  },
+  {
+    inputType: SmartInputType.text,
+    label: 'Test 2',
+    propertyName: 'test1',
+    placeholder: 'Test1 Placeholder',
+    value: 'something1'
+  }
+];
 
 function App() {
   return (
@@ -26,7 +44,7 @@ function App() {
       </AppBar>
       <Grid container spacing={3}>
         <Grid item md={4} xs={12}>
-          <SmartGroup />
+          <SmartGroup fields={testData} />
         </Grid>
         <Grid item md={4} xs={12}>
 

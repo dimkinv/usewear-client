@@ -1,32 +1,46 @@
 import { Card, CardContent, CardActions, IconButton } from '@material-ui/core';
 import { AddBox } from '@material-ui/icons'
-import React from 'react';
-import { SmartInput, SmartInputType } from '../smart-input/SmartInput';
+import React, { useEffect, useState } from 'react';
+import { FormField } from '../smart-form.model';
+import { SmartInput } from '../smart-input/SmartInput';
 
-const names = [
-    'Oliver Hansen',
-    'Van Henry',
-    'April Tucker',
-    'Ralph Hubbard',
-    'Omar Alexander',
-    'Carlos Abbott',
-    'Miriam Wagner',
-    'Bradley Wilkerson',
-    'Virginia Andrews',
-    'Kelly Snyder',
-];
+export interface SmartGroupProps {
+    fields: FormField[];
+}
 
-export const SmartGroup: React.FC = () => (
-    <Card variant="elevation">
+export const SmartGroup: React.FC<SmartGroupProps> = (props) => {
+    const initialState = props.fields.reduce((acc, field)=>{
+     return {
+         ...acc,
+         [field.propertyName]: field.value
+     }   
+    }, {});
+    const [fieldsState, setFieldsState] = useState<{ [index: string]: string | string[] }>(initialState);
+
+    useEffect(()=>{
+        console.log(fieldsState);
+    }, [fieldsState])
+
+    return <Card variant="elevation">
         <CardContent>
             <Card variant="outlined">
                 <CardContent>
-                    <SmartInput label="test 1" inputType={SmartInputType.text} id="input" />
-                    <SmartInput label="test 1" inputType={SmartInputType.select} id="select" options={names} />
-                    <SmartInput label="test 1" inputType={SmartInputType.multi_select} id="multiselect" options={names} />
+                    {props.fields.map((field, index) =>
+                        <SmartInput
+                            key={index}
+                            label={field.label}
+                            inputType={field.inputType}
+                            id={field.propertyName}
+                            propertyName={field.propertyName}
+                            value={fieldsState![field.propertyName]}
+                            onChange={(fieldName, value) => setFieldsState({
+                                ...fieldsState,
+                                [fieldName]: value
+                            })}
+                        />
+                    )}
                 </CardContent>
             </Card>
-
         </CardContent>
         <CardActions>
             <IconButton color="primary" aria-label="upload picture" component="span">
@@ -34,7 +48,7 @@ export const SmartGroup: React.FC = () => (
             </IconButton>
         </CardActions>
     </Card>
-);
+};
 
 export interface FormGroupProps {
     isMultiple: boolean;

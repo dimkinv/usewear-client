@@ -1,22 +1,11 @@
 import { FormControl, InputLabel, MenuItem, Select, TextField } from '@material-ui/core';
 import React, { PropsWithChildren, useState } from 'react';
+import { FormField, SmartInputType } from '../smart-form.model';
 import { MultiSelect } from './MultiSelect';
 
-export interface SmartInputProps {
-  inputType: SmartInputType
-  label: string;
-  placeholder?: string;
+export interface SmartInputProps extends FormField {
   id: string;
-  value?: string | string[];
-  options?: string[];
-  onChange?: (newValue: unknown) => void;
-}
-
-export enum SmartInputType {
-  text = 'text',
-  select = 'select',
-  multi_select = 'multi_select',
-  date = 'date'
+  onChange: (fieldName: string, value: string | string[]) => void;
 }
 
 export const SmartInput: React.FC<SmartInputProps> = (props: PropsWithChildren<SmartInputProps>) => {
@@ -54,7 +43,7 @@ function renderComponent(props: PropsWithChildren<SmartInputProps>, personName: 
           label={props.label}
           value={props.value}
           placeholder={props.placeholder}
-          onChange={props.onChange}
+          onChange={event => props.onChange(props.propertyName, event.target.value)}
         />
       </FormControl>
     case SmartInputType.select:
