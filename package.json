@@ -22,7 +22,6 @@
     "build": "react-scripts build && cp static.json ./build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy": "cd build && git add --all && git commit -m \"version deploy\" && git push heroku master"
   },
   "eslintConfig": {
     "extends": [
