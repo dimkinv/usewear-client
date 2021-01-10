@@ -3,7 +3,7 @@ import { AppBar, Toolbar, Typography, createMuiTheme, ThemeProvider, Grid } from
 import './App.css';
 import { green } from '@material-ui/core/colors';
 import { SmartGroup } from './dynamic-forms/smart-group/SmartGroup';
-import { FormField, SmartInputType } from './dynamic-forms/smart-form.model';
+import { generalInfoOfItemFields, item } from './dynamic-forms/example-item';
 
 const darkTheme = createMuiTheme({
   palette: {
@@ -14,45 +14,6 @@ const darkTheme = createMuiTheme({
     },
   },
 });
-
-const testData: FormField[] = [
-  {
-    inputType: SmartInputType.text,
-    label: 'Test 1',
-    propertyName: 'test',
-    placeholder: 'Test Placeholder',
-    value: 'something'
-  },
-  {
-    inputType: SmartInputType.text,
-    label: 'Test 2',
-    propertyName: 'test1',
-    placeholder: 'Test2 Placeholder',
-    value: 'something1'
-  },
-  {
-    inputType: SmartInputType.select,
-    label: 'Test 3',
-    propertyName: 'test3',
-    placeholder: 'Test1 Placeholder',
-    value: 'option2',
-    options:[
-      'option1',
-      'option2'
-    ]
-  },
-  {
-    inputType: SmartInputType.multi_select,
-    label: 'Test 4',
-    propertyName: 'test4',
-    placeholder: 'Test2 Placeholder',
-    value: ['option2'],
-    options:[
-      'option1',
-      'option2'
-    ]
-  }
-];
 
 function App() {
   return (
@@ -66,13 +27,11 @@ function App() {
       </AppBar>
       <Grid container spacing={3}>
         <Grid item md={4} xs={12}>
-          <SmartGroup fields={testData} />
+          <SmartGroup fields={generalInfoOfItemFields} isMultiple={true} data={item.generalInfoOfItem as unknown as { [id: string]: unknown }[]} />
         </Grid>
         <Grid item md={4} xs={12}>
-
         </Grid>
         <Grid item md={4} xs={12}>
-
         </Grid>
       </Grid>
     </ThemeProvider>

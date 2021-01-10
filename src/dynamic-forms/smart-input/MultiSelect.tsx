@@ -1,5 +1,4 @@
 import { FormControl, InputLabel, Chip, Select, MenuItem, makeStyles } from "@material-ui/core";
-import { useState } from "react";
 import { SmartInputProps } from "./SmartInput";
 
 export interface MultiSelectProps {

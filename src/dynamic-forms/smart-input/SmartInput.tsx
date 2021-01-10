@@ -5,7 +5,8 @@ import { MultiSelect } from './MultiSelect';
 
 export interface SmartInputProps extends FormField {
   id: string;
-  onChange: (fieldName: string, value: string | string[]) => void;
+  value: unknown;
+  onChange: (fieldName: string, value: unknown) => void;
 }
 
 export const SmartInput: React.FC<SmartInputProps> = (props: PropsWithChildren<SmartInputProps>) => {
@@ -36,10 +37,9 @@ function renderComponent(props: PropsWithChildren<SmartInputProps>, personName: 
 
   switch (props.inputType) {
     case SmartInputType.text:
-      return <FormControl>
+      return <FormControl fullWidth>
         <TextField
           id={uniqueControlId}
-          fullWidth
           label={props.label}
           value={props.value}
           placeholder={props.placeholder}

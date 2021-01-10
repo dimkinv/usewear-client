@@ -1,6 +1,5 @@
 export interface FormField{
     propertyName: string;
-    value?: string | string[];
     label:string;
     placeholder?: string;
     inputType: SmartInputType,
