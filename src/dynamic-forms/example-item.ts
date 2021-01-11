@@ -124,85 +124,127 @@ export const item = {
     }
 };
 
+export const generalInfo: FormField[] = [
+    {
+        inputType: SmartInputType.text,
+        label: 'Name',
+        propertyName: 'name',
+    },
+    {
+        inputType: SmartInputType.text,
+        label: 'Date',
+        propertyName: 'date',
+    },
+    {
+        inputType: SmartInputType.text,
+        label: 'Place',
+        propertyName: 'place',
+    },
+    {
+        inputType: SmartInputType.text,
+        label: 'User',
+        propertyName: 'user',
+    }
+];
+
+export const root: FormField[] = [
+
+    {
+        inputType: SmartInputType.text,
+        label: 'Site',
+        propertyName: 'site',
+    },
+    {
+        inputType: SmartInputType.text,
+        label: 'Place',
+        propertyName: 'place',
+    },
+    {
+        inputType: SmartInputType.text,
+        label: 'Area',
+        propertyName: 'area',
+    }
+]
+
 export const generalInfoOfItemFields: FormField[] = [
     {
         inputType: SmartInputType.text,
         label: 'Name',
-        propertyName:'name',
+        propertyName: 'name',
     },
     {
         inputType: SmartInputType.text,
         label: 'Raw Material',
-        propertyName:'rawMaterial',
+        propertyName: 'rawMaterial',
     },
     {
         inputType: SmartInputType.text,
         label: 'Typology',
-        propertyName:'typology',
+        propertyName: 'typology',
     },
     {
         inputType: SmartInputType.text,
         label: 'Type',
-        propertyName:'type',
+        propertyName: 'type',
     },
     {
         inputType: SmartInputType.text,
         label: 'Bulb',
-        propertyName:'bulb',
+        propertyName: 'bulb',
     },
     {
         inputType: SmartInputType.text,
         label: 'Striking Platform',
-        propertyName:'strikingPlatform',
+        propertyName: 'strikingPlatform',
     },
     {
         inputType: SmartInputType.text,
         label: 'Retouch',
-        propertyName:'retouch',
+        propertyName: 'retouch',
     },
     {
         inputType: SmartInputType.text,
         label: 'Max Length',
-        propertyName:'maxL',
+        propertyName: 'maxL',
     },
     {
         inputType: SmartInputType.text,
         label: 'Max Width',
-        propertyName:'maxW',
+        propertyName: 'maxW',
     },
     {
         inputType: SmartInputType.text,
         label: 'Max Thickness',
-        propertyName:'maxT',
+        propertyName: 'maxT',
     },
     {
         inputType: SmartInputType.text,
         label: 'Raw Material Quality',
-        propertyName:'rawMaterialQuality',
+        propertyName: 'rawMaterialQuality',
     },
     {
         inputType: SmartInputType.text,
         label: 'Raw Material Coloe',
-        propertyName:'rawMaterialColor',
+        propertyName: 'rawMaterialColor',
     },
     {
         inputType: SmartInputType.text,
         label: 'Amount of Cortex',
-        propertyName:'amountOfCortex',
+        propertyName: 'amountOfCortex',
     },
     {
         inputType: SmartInputType.text,
         label: 'Retouch Location',
-        propertyName:'retouchLocation',
+        propertyName: 'retouchLocation',
     },
     {
         inputType: SmartInputType.text,
         label: 'Retouch Long',
-        propertyName:'retouchLong',
+        propertyName: 'retouchLong',
     },
     {
         inputType: SmartInputType.text,
         label: 'Broken Complete',
-        propertyName:'brokenComplete',
+        propertyName: 'brokenComplete',
     },
 ]

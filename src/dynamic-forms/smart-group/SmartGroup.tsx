@@ -6,12 +6,12 @@ import { SmartInput } from '../smart-input/SmartInput';
 
 export interface SmartGroupProps {
     fields: FormField[];
-    data: { [id: string]: unknown }[];
+    data: { [id: string]: unknown }[] | { [id: string]: unknown };
     isMultiple: boolean;
 }
 
 export const SmartGroup: React.FC<SmartGroupProps> = (props) => {
-    const [fieldsState, setFieldsState] = useState<{ [id: string]: unknown }[]>(props.data);
+    const [fieldsState, setFieldsState] = useState<{ [id: string]: unknown }[] | { [id: string]: unknown }>(props.data);
     const [fieldsGroups, setFieldsGroups] = useState<FormField[][]>([props.fields]);
 
 
@@ -27,7 +27,10 @@ export const SmartGroup: React.FC<SmartGroupProps> = (props) => {
                                 inputType={field.inputType}
                                 id={field.propertyName}
                                 propertyName={field.propertyName}
-                                value={fieldsState[groupIndex][field.propertyName]}
+                                value={
+                                    fieldsState instanceof Array ?
+                                        fieldsState[groupIndex][field.propertyName] :
+                                        fieldsState[field.propertyName]}
                                 options={field.options}
                                 onChange={(fieldName, value) => setFieldsState({
                                     ...fieldsState,
@@ -56,5 +59,17 @@ export const SmartGroup: React.FC<SmartGroupProps> = (props) => {
             ...fieldsGroups,
             props.fields
         ]);
+
+        if (fieldsState instanceof Array) {
+            setFieldsState([
+                ...fieldsState,
+                {}
+            ]);
+            return;
+        } else{
+            setFieldsState({
+                ...fieldsState
+            });
+        }
     }
 };
