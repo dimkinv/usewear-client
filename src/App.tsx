@@ -27,17 +27,21 @@ function App() {
       </AppBar>
       <Grid container spacing={3}>
         <Grid item md={4} xs={12}>
-          <SmartGroup fields={generalInfoOfItemFields} isMultiple={true} data={item.generalInfoOfItem as unknown as { [id: string]: unknown }[]} />
+          <SmartGroup fields={generalInfoOfItemFields} isMultiple={true} data={item.generalInfoOfItem as unknown as { [id: string]: unknown }[]} onChange={onGroupChange.bind(null, 'generalInfoOfItemFields')} />
         </Grid>
         <Grid item md={4} xs={12}>
-        <SmartGroup fields={generalInfo} isMultiple={true} data={item.generalInfo as unknown as { [id: string]: unknown }[]} />
+        <SmartGroup fields={generalInfo} isMultiple={true} data={item.generalInfo as unknown as { [id: string]: unknown }[]} onChange={onGroupChange.bind(null, 'generalInfo')} />
         </Grid>
         <Grid item md={4} xs={12}>
-        <SmartGroup fields={root} isMultiple={true} data={item as unknown as { [id: string]: unknown }[]} />
+        <SmartGroup fields={root} isMultiple={true} data={item as unknown as { [id: string]: unknown }[]} onChange={onGroupChange.bind(null, 'item')} />
         </Grid>
-      </Grid>
+      </Grid>l
     </ThemeProvider>
   );
+
+  function onGroupChange(propertyName: string, groupData: { [id: string]: unknown }[] | { [id: string]: unknown }){
+    console.log(`${propertyName} - ${JSON.stringify(groupData)}`)
+  }
 }
 
 export default App;

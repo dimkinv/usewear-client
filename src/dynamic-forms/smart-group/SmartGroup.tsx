@@ -1,6 +1,6 @@
 import { Card, CardContent, CardActions, IconButton } from '@material-ui/core';
 import { AddBox } from '@material-ui/icons'
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FormField } from '../smart-form.model';
 import { SmartInput } from '../smart-input/SmartInput';
 
@@ -8,12 +8,15 @@ export interface SmartGroupProps {
     fields: FormField[];
     data: { [id: string]: unknown }[] | { [id: string]: unknown };
     isMultiple: boolean;
+    onChange: (data: { [id: string]: unknown }[] | { [id: string]: unknown }) => void;
 }
 
 export const SmartGroup: React.FC<SmartGroupProps> = (props) => {
     const [fieldsState, setFieldsState] = useState<{ [id: string]: unknown }[] | { [id: string]: unknown }>(props.data);
     const [fieldsGroups, setFieldsGroups] = useState<FormField[][]>([props.fields]);
 
+    // const { onChange } = props;
+    // useEffect(() => { onChange(fieldsState) }, [fieldsState, onChange]);
 
     return <Card variant="elevation">
         <CardContent>
@@ -66,7 +69,7 @@ export const SmartGroup: React.FC<SmartGroupProps> = (props) => {
                 {}
             ]);
             return;
-        } else{
+        } else {
             setFieldsState({
                 ...fieldsState
             });
