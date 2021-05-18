@@ -4,6 +4,7 @@ import './App.css';
 import { green } from '@material-ui/core/colors';
 import { SmartGroup } from './dynamic-forms/smart-group/SmartGroup';
 import { generalInfo, generalInfoOfItemFields, item, root } from './dynamic-forms/example-item';
+import { SmartGroupController } from './dynamic-forms/smart-group-controller/SmartGroupController';
 
 const darkTheme = createMuiTheme({
   palette: {
@@ -27,20 +28,25 @@ function App() {
       </AppBar>
       <Grid container spacing={3}>
         <Grid item md={4} xs={12}>
-          <SmartGroup fields={generalInfoOfItemFields} isMultiple={true} data={item.generalInfoOfItem as unknown as { [id: string]: unknown }[]} onChange={onGroupChange.bind(null, 'generalInfoOfItemFields')} />
+          {/* <SmartGroup fields={generalInfoOfItemFields} isMultiple={true} data={item.generalInfoOfItem[0] as { [id: string]: unknown }} onChange={onGroupChange.bind(null, 'generalInfoOfItemFields')} /> */}
+          <SmartGroupController fields={generalInfoOfItemFields} data={item.generalInfoOfItem} onChange={onGroupChange.bind(null, item.generalInfoOfItem)}></SmartGroupController>
         </Grid>
         <Grid item md={4} xs={12}>
-        <SmartGroup fields={generalInfo} isMultiple={true} data={item.generalInfo as unknown as { [id: string]: unknown }[]} onChange={onGroupChange.bind(null, 'generalInfo')} />
+          {/* <SmartGroup fields={generalInfo} data={item.generalInfo as { [id: string]: unknown }} onChange={onGroupChange.bind(null, 'generalInfo')} /> */}
         </Grid>
         <Grid item md={4} xs={12}>
-        <SmartGroup fields={root} isMultiple={true} data={item as unknown as { [id: string]: unknown }[]} onChange={onGroupChange.bind(null, 'item')} />
+          {/* <SmartGroup fields={root} data={item as { [id: string]: unknown }} onChange={onGroupChange.bind(null, 'item')} /> */}
         </Grid>
+
       </Grid>l
     </ThemeProvider>
   );
 
-  function onGroupChange(propertyName: string, groupData: { [id: string]: unknown }[] | { [id: string]: unknown }){
-    console.log(`${propertyName} - ${JSON.stringify(groupData)}`)
+  function onGroupChange(group: { [id: string]: unknown }[], index: number, fieldName: string, value: unknown) {
+    item.generalInfoOfItem[index] = {
+      ...item.generalInfoOfItem[index],
+      [fieldName]: value
+    }
   }
 }
 

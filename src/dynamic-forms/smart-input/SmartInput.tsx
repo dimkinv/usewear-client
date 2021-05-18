@@ -1,5 +1,5 @@
 import { FormControl, InputLabel, MenuItem, Select, TextField } from '@material-ui/core';
-import React, { PropsWithChildren, useState } from 'react';
+import React, { PropsWithChildren } from 'react';
 import { FormField, SmartInputType } from '../smart-form.model';
 import { MultiSelect } from './MultiSelect';
 
@@ -10,16 +10,11 @@ export interface SmartInputProps extends FormField {
 }
 
 export const SmartInput: React.FC<SmartInputProps> = (props: PropsWithChildren<SmartInputProps>) => {
-  const [personName, setPersonName] = useState<string[]>([]);
-
-  const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    setPersonName(event.target.value as string[]);
-  };
   validateSelect(props);
 
   return (
     <div>
-      {renderComponent(props, personName, handleChange)}
+      {renderComponent(props)}
     </div>
   );
 }
@@ -32,7 +27,7 @@ function validateSelect(props: React.PropsWithChildren<SmartInputProps>) {
   }
 }
 
-function renderComponent(props: PropsWithChildren<SmartInputProps>, personName: any, handleChange: any) {
+function renderComponent(props: PropsWithChildren<SmartInputProps>) {
   const uniqueControlId = `${props.id}_${Math.floor(Math.random() * 1000)}`;
 
   switch (props.inputType) {
@@ -55,7 +50,7 @@ function renderComponent(props: PropsWithChildren<SmartInputProps>, personName: 
           labelId={`label_${uniqueControlId}`}
           id={uniqueControlId}
           value={props.value}
-          onChange={event => props.onChange(props.propertyName, event.target.value as string)}
+          // onChange={event => props.onChange(props.propertyName, event.target.value as string)}
         >
           {props.options?.map((value) => (
             <MenuItem key={value} value={value}>
