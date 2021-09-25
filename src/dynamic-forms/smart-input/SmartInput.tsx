@@ -1,4 +1,4 @@
-import { FormControl, TextField, InputLabel, Select, MenuItem } from '@mui/material';
+import { FormControl, TextField } from '@mui/material';
 import React, { PropsWithChildren, useState } from 'react';
 import { FormField, SmartInputType } from '../smart-form.model';
 import { MultiSelect } from './MultiSelect';

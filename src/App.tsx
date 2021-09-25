@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { AppBar, Toolbar, Typography, ThemeProvider, Grid } from '@mui/material';
+import { AppBar, Toolbar, Typography, ThemeProvider } from '@mui/material';
 import { createTheme } from '@mui/material/styles';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { ItemDetailsPage } from './pages/item-details/ItemDetails';
