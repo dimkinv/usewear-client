@@ -1,0 +1,8 @@
+.chip{
+    margin: 2
+}
+
+.chip-wrapper{
+    display: flex;
+    flex-wrap: wrap;
+}

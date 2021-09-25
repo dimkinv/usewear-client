@@ -1,5 +1,5 @@
-import { Card, CardActions, CardContent, IconButton } from '@material-ui/core';
-import { AddBox } from '@material-ui/icons';
+import { AddBox } from '@mui/icons-material';
+import { Card, CardContent, CardActions, IconButton } from '@mui/material';
 import React, { PropsWithChildren, useState } from 'react';
 import { FormField } from '../smart-form.model';
 import { SmartGroup } from '../smart-group/SmartGroup';

@@ -1,20 +1,13 @@
-import { FormControl, InputLabel, Chip, Select, MenuItem, makeStyles } from "@material-ui/core";
+import { FormControl, InputLabel, Select, MenuItem, Chip } from "@mui/material";
 import { SmartInputProps } from "./SmartInput";
 
 export interface MultiSelectProps {
   smartInputProps: SmartInputProps
 }
 
-const useStyles = makeStyles({
-  chip: {
-    margin: 2
-  },
-  chipWrapper: { display: 'flex', flexWrap: 'wrap' }
-});
 
 export const MultiSelect: React.FC<MultiSelectProps> = (props) => {
-  const {smartInputProps} = props
-  const classes = useStyles();
+  const {smartInputProps} = props;
   
   return (
     <FormControl fullWidth>
@@ -39,9 +32,9 @@ export const MultiSelect: React.FC<MultiSelectProps> = (props) => {
   function renderValues(selectedValues: unknown) {
     const values = selectedValues as string[];
     return (
-      <div className={classes.chipWrapper}>
+      <div className="chip-wrapper">
         {values?.map(selectedValue => {
-          return <Chip className={classes.chip} key={selectedValue} label={selectedValue} />
+          return <Chip className="chip" key={selectedValue} label={selectedValue} />
         })}
       </div>
     )

@@ -1,4 +1,4 @@
-import { FormControl, InputLabel, MenuItem, Select, TextField } from '@material-ui/core';
+import { FormControl, TextField, InputLabel, Select, MenuItem } from '@mui/material';
 import React, { PropsWithChildren, useState } from 'react';
 import { FormField, SmartInputType } from '../smart-form.model';
 import { MultiSelect } from './MultiSelect';
@@ -7,6 +7,7 @@ export interface SmartInputProps extends FormField {
   id: string;
   value: unknown;
   onFieldChange: (fieldName: string, value: unknown) => void;
+  className?: string;
 }
 
 export const SmartInput: React.FC<SmartInputProps> = (props: PropsWithChildren<SmartInputProps>) => {
@@ -15,7 +16,7 @@ export const SmartInput: React.FC<SmartInputProps> = (props: PropsWithChildren<S
   const [value, setValue] = useState(props.value ?? initializeValue(props.value, props.inputType));
 
   return (
-    <div>
+    <div className={props.className}>
       {renderComponent(props)}
     </div>
   );
@@ -54,24 +55,24 @@ export const SmartInput: React.FC<SmartInputProps> = (props: PropsWithChildren<S
             onChange={onValueChange}
           />
         </FormControl>
-      case SmartInputType.select:
-        return <FormControl fullWidth>
-          <InputLabel id={`label_${uniqueControlId}`}>{props.label}</InputLabel>
-          <Select
-            fullWidth
-            placeholder={props.placeholder}
-            labelId={`label_${uniqueControlId}`}
-            id={uniqueControlId}
-            value={props.value}
-            onChange={onValueChange}
-          >
-            {props.options?.map((value) => (
-              <MenuItem key={value} value={value}>
-                {value}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
+      // case SmartInputType.select:
+      //   return <FormControl fullWidth>
+      //     <InputLabel id={`label_${uniqueControlId}`}>{props.label}</InputLabel>
+      //     <Select
+      //       fullWidth
+      //       placeholder={props.placeholder}
+      //       labelId={`label_${uniqueControlId}`}
+      //       id={uniqueControlId}
+      //       value={props.value}
+      //       onChange={onValueChange}
+      //     >
+      //       {props.options?.map((value) => (
+      //         <MenuItem key={value} value={value}>
+      //           {value}
+      //         </MenuItem>
+      //       ))}
+      //     </Select>
+      //   </FormControl>
       case SmartInputType.multi_select:
         return <MultiSelect smartInputProps={props} />
     }

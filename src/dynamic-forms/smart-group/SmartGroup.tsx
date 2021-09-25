@@ -1,4 +1,5 @@
-import { Card, CardContent } from '@material-ui/core';
+import './SmartGroup.css';
+import { Card, CardContent } from '@mui/material';
 import React, { useState } from 'react';
 import { FormField } from '../smart-form.model';
 import { SmartInput } from '../smart-input/SmartInput';
@@ -17,6 +18,7 @@ export const SmartGroup: React.FC<SmartGroupProps> = (props) => {
             <CardContent>
                 {props.fields.map((field, fieldIndex) =>
                     <SmartInput
+                        className="smart-input"
                         key={fieldIndex}
                         label={field.label}
                         inputType={field.inputType}
