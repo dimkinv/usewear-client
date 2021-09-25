@@ -1,65 +1,84 @@
 import { FormControl, InputLabel, MenuItem, Select, TextField } from '@material-ui/core';
-import React, { PropsWithChildren } from 'react';
+import React, { PropsWithChildren, useState } from 'react';
 import { FormField, SmartInputType } from '../smart-form.model';
 import { MultiSelect } from './MultiSelect';
 
 export interface SmartInputProps extends FormField {
   id: string;
   value: unknown;
-  onChange: (fieldName: string, value: unknown) => void;
+  onFieldChange: (fieldName: string, value: unknown) => void;
 }
 
 export const SmartInput: React.FC<SmartInputProps> = (props: PropsWithChildren<SmartInputProps>) => {
+
   validateSelect(props);
+  const [value, setValue] = useState(props.value ?? initializeValue(props.value, props.inputType));
 
   return (
     <div>
       {renderComponent(props)}
     </div>
   );
-}
 
-function validateSelect(props: React.PropsWithChildren<SmartInputProps>) {
-  if (props.inputType === SmartInputType.select || props.inputType === SmartInputType.multi_select) {
-    if (!props.options || !(props.options instanceof Array)) {
-      throw new Error('Invalid value for multi_select, did you forget to pass string[] type as value?');
+  function initializeValue(value: unknown, type: SmartInputType) {
+    switch (type) {
+      case SmartInputType.date:
+        return new Date();
+      case SmartInputType.text:
+        return '';
+      default:
+        return [];
+    }
+
+  }
+
+  function validateSelect(props: React.PropsWithChildren<SmartInputProps>) {
+    if (props.inputType === SmartInputType.select || props.inputType === SmartInputType.multi_select) {
+      if (!props.options || !(props.options instanceof Array)) {
+        throw new Error('Invalid value for multi_select, did you forget to pass string[] type as value?');
+      }
     }
   }
-}
 
-function renderComponent(props: PropsWithChildren<SmartInputProps>) {
-  const uniqueControlId = `${props.id}_${Math.floor(Math.random() * 1000)}`;
+  function renderComponent(props: PropsWithChildren<SmartInputProps>) {
+    const uniqueControlId = `${props.id}_${Math.floor(Math.random() * 1000)}`;
 
-  switch (props.inputType) {
-    case SmartInputType.text:
-      return <FormControl fullWidth>
-        <TextField
-          id={uniqueControlId}
-          label={props.label}
-          value={props.value}
-          placeholder={props.placeholder}
-          onChange={event => props.onChange(props.propertyName, event.target.value)}
-        />
-      </FormControl>
-    case SmartInputType.select:
-      return <FormControl fullWidth>
-        <InputLabel id={`label_${uniqueControlId}`}>{props.label}</InputLabel>
-        <Select
-          fullWidth
-          placeholder={props.placeholder}
-          labelId={`label_${uniqueControlId}`}
-          id={uniqueControlId}
-          value={props.value}
-          // onChange={event => props.onChange(props.propertyName, event.target.value as string)}
-        >
-          {props.options?.map((value) => (
-            <MenuItem key={value} value={value}>
-              {value}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-    case SmartInputType.multi_select:
-      return <MultiSelect smartInputProps={props} />
+    switch (props.inputType) {
+      case SmartInputType.text:
+        return <FormControl fullWidth>
+          <TextField
+            id={uniqueControlId}
+            label={props.label}
+            value={value}
+            placeholder={props.placeholder}
+            onChange={onValueChange}
+          />
+        </FormControl>
+      case SmartInputType.select:
+        return <FormControl fullWidth>
+          <InputLabel id={`label_${uniqueControlId}`}>{props.label}</InputLabel>
+          <Select
+            fullWidth
+            placeholder={props.placeholder}
+            labelId={`label_${uniqueControlId}`}
+            id={uniqueControlId}
+            value={props.value}
+            onChange={onValueChange}
+          >
+            {props.options?.map((value) => (
+              <MenuItem key={value} value={value}>
+                {value}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      case SmartInputType.multi_select:
+        return <MultiSelect smartInputProps={props} />
+    }
+  }
+
+  function onValueChange(element: React.ChangeEvent<{ value: unknown }>) {
+    setValue(element.target.value);
+    props.onFieldChange(props.propertyName, element.target.value);
   }
 }

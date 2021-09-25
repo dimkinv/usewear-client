@@ -8,23 +8,36 @@ export interface SmartGroupControllerProps {
     data: { [id: string]: unknown }[];
     fields: FormField[];
     onChange: (index: number, fieldName: string, value: unknown) => void;
-    onGroupAdd?: () => void;
 }
 
 export const SmartGroupController: React.FC<SmartGroupControllerProps> = (props: PropsWithChildren<SmartGroupControllerProps>) => {
+    const [groups, setGroups] = useState(props.data);
+
     return (
         <Card variant="elevation">
             <CardContent>
-                {props.data.map((group, index) => <SmartGroup key={index} fields={props.fields} data={group} onChange={props.onChange.bind(null, index)}></SmartGroup>)}
+                {groups.map((group, index) => <SmartGroup key={index} fields={props.fields} groupData={group} onGroupChange={group => onGroupChange(index, group)}></SmartGroup>)}
             </CardContent>
             <CardActions>
                 <IconButton
                     color="primary"
                     component="span"
-                    onClick={props.onGroupAdd}>
+                    onClick={onGroupAdd}>
                     <AddBox />
                 </IconButton>
             </CardActions>
         </Card>
     )
+
+    function onGroupChange(groupIndex: number, group: { [id: string]: unknown }){
+        const changedGroups = [...groups];
+        changedGroups[groupIndex] = group;
+    }
+    
+    function onGroupAdd(){
+        setGroups([
+            ...groups,
+            {}
+        ]);
+    }
 }

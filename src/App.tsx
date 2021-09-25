@@ -29,7 +29,7 @@ function App() {
       <Grid container spacing={3}>
         <Grid item md={4} xs={12}>
           {/* <SmartGroup fields={generalInfoOfItemFields} isMultiple={true} data={item.generalInfoOfItem[0] as { [id: string]: unknown }} onChange={onGroupChange.bind(null, 'generalInfoOfItemFields')} /> */}
-          <SmartGroupController fields={generalInfoOfItemFields} data={item.generalInfoOfItem} onChange={onGroupChange.bind(null, item.generalInfoOfItem)}></SmartGroupController>
+          <SmartGroupController fields={generalInfoOfItemFields} data={item.generalInfoOfItem} onChange={(index, fieldname, value) => onGroupChange(item.generalInfoOfItem, index, fieldname, value)}></SmartGroupController>
         </Grid>
         <Grid item md={4} xs={12}>
           {/* <SmartGroup fields={generalInfo} data={item.generalInfo as { [id: string]: unknown }} onChange={onGroupChange.bind(null, 'generalInfo')} /> */}
@@ -38,15 +38,13 @@ function App() {
           {/* <SmartGroup fields={root} data={item as { [id: string]: unknown }} onChange={onGroupChange.bind(null, 'item')} /> */}
         </Grid>
 
-      </Grid>l
+      </Grid>
     </ThemeProvider>
   );
 
   function onGroupChange(group: { [id: string]: unknown }[], index: number, fieldName: string, value: unknown) {
-    item.generalInfoOfItem[index] = {
-      ...item.generalInfoOfItem[index],
-      [fieldName]: value
-    }
+    group[index].fieldName = value;
+    console.log(group)
   }
 }
 

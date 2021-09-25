@@ -24,7 +24,7 @@ export const MultiSelect: React.FC<MultiSelectProps> = (props) => {
         id={smartInputProps.id}
         multiple
         value={smartInputProps.value}
-        onChange={event => smartInputProps.onChange(smartInputProps.propertyName, event.target.value as string[])}
+        onChange={event => smartInputProps.onFieldChange(smartInputProps.propertyName, event.target.value as string[])}
         renderValue={renderValues}
       >
         {smartInputProps.options?.map((value) => (

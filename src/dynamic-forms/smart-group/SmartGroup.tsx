@@ -5,14 +5,11 @@ import { SmartInput } from '../smart-input/SmartInput';
 
 export interface SmartGroupProps {
     fields: FormField[];
-    data: { [id: string]: unknown };
-    onChange: (fieldName: string, value: unknown) => void;
+    groupData: { [id: string]: unknown };
+    onGroupChange: (group: { [id: string]: unknown }) => void;
 }
 
 export const SmartGroup: React.FC<SmartGroupProps> = (props) => {
-
-
-
     return (
         <Card variant="outlined">
             <CardContent>
@@ -23,12 +20,21 @@ export const SmartGroup: React.FC<SmartGroupProps> = (props) => {
                         inputType={field.inputType}
                         id={field.propertyName}
                         propertyName={field.propertyName}
-                        value={props.data[field.propertyName]}
+                        value={props.groupData[field.propertyName]}
                         options={field.options}
-                        onChange={props.onChange}
+                        onFieldChange={onFieldChange}
                     />
                 )}
             </CardContent>
         </Card>
     )
+
+    function onFieldChange(fieldName: string, value: unknown){
+        const updatedGroup = {
+            ...props.groupData,
+            [fieldName]: value
+        }
+
+        props.onGroupChange(updatedGroup);
+    }
 };
