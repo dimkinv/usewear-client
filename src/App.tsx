@@ -2,9 +2,8 @@ import React from 'react';
 import { AppBar, Toolbar, Typography, createMuiTheme, ThemeProvider, Grid } from '@material-ui/core';
 import './App.css';
 import { green } from '@material-ui/core/colors';
-import { SmartGroup } from './dynamic-forms/smart-group/SmartGroup';
-import { generalInfo, generalInfoOfItemFields, item, root } from './dynamic-forms/example-item';
-import { SmartGroupController } from './dynamic-forms/smart-group-controller/SmartGroupController';
+import { generalInfoOfItemFields, item } from './dynamic-forms/example-item';
+import { SmartGroupController } from './dynamic-forms/smart-group-controller/SmartGroupsController';
 
 const darkTheme = createMuiTheme({
   palette: {
@@ -19,7 +18,7 @@ const darkTheme = createMuiTheme({
 function App() {
   return (
     <ThemeProvider theme={darkTheme}>
-      <AppBar position="relative" color="secondary">
+      <AppBar className="" position="relative" color="secondary">
         <Toolbar>
           <Typography variant="h6" color="inherit" noWrap>
             Usewear
@@ -29,7 +28,7 @@ function App() {
       <Grid container spacing={3}>
         <Grid item md={4} xs={12}>
           {/* <SmartGroup fields={generalInfoOfItemFields} isMultiple={true} data={item.generalInfoOfItem[0] as { [id: string]: unknown }} onChange={onGroupChange.bind(null, 'generalInfoOfItemFields')} /> */}
-          <SmartGroupController fields={generalInfoOfItemFields} data={item.generalInfoOfItem} onChange={(index, fieldname, value) => onGroupChange(item.generalInfoOfItem, index, fieldname, value)}></SmartGroupController>
+          <SmartGroupController fields={generalInfoOfItemFields} data={item.generalInfoOfItem} onChange={(groupIndex:number, changedGroup: { [id: string]: unknown }) => onGroupChange(item.generalInfoOfItem, groupIndex, changedGroup)}></SmartGroupController>
         </Grid>
         <Grid item md={4} xs={12}>
           {/* <SmartGroup fields={generalInfo} data={item.generalInfo as { [id: string]: unknown }} onChange={onGroupChange.bind(null, 'generalInfo')} /> */}
@@ -42,9 +41,9 @@ function App() {
     </ThemeProvider>
   );
 
-  function onGroupChange(group: { [id: string]: unknown }[], index: number, fieldName: string, value: unknown) {
-    group[index].fieldName = value;
-    console.log(group)
+  function onGroupChange(groups: { [id: string]: unknown }[], groupIndex: number, changedGroup: { [id: string]: unknown }) {
+    groups[groupIndex] = changedGroup;
+    console.log(item)
   }
 }
 

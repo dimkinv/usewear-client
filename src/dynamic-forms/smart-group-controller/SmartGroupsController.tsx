@@ -3,11 +3,12 @@ import { AddBox } from '@material-ui/icons';
 import React, { PropsWithChildren, useState } from 'react';
 import { FormField } from '../smart-form.model';
 import { SmartGroup } from '../smart-group/SmartGroup';
+import './SmartGroupsController.css';
 
 export interface SmartGroupControllerProps {
     data: { [id: string]: unknown }[];
     fields: FormField[];
-    onChange: (index: number, fieldName: string, value: unknown) => void;
+    onChange: (groupIndex: number, changedGroup: { [id: string]: unknown }) => void;
 }
 
 export const SmartGroupController: React.FC<SmartGroupControllerProps> = (props: PropsWithChildren<SmartGroupControllerProps>) => {
@@ -16,7 +17,12 @@ export const SmartGroupController: React.FC<SmartGroupControllerProps> = (props:
     return (
         <Card variant="elevation">
             <CardContent>
-                {groups.map((group, index) => <SmartGroup key={index} fields={props.fields} groupData={group} onGroupChange={group => onGroupChange(index, group)}></SmartGroup>)}
+                {
+                    groups.map((group, index) =>
+                        <div className="group" key={index}>
+                            <SmartGroup fields={props.fields} groupData={group} onGroupChange={group => props.onChange(index, group)}></SmartGroup>
+                        </div>)
+                }
             </CardContent>
             <CardActions>
                 <IconButton
@@ -29,12 +35,7 @@ export const SmartGroupController: React.FC<SmartGroupControllerProps> = (props:
         </Card>
     )
 
-    function onGroupChange(groupIndex: number, group: { [id: string]: unknown }){
-        const changedGroups = [...groups];
-        changedGroups[groupIndex] = group;
-    }
-    
-    function onGroupAdd(){
+    function onGroupAdd() {
         setGroups([
             ...groups,
             {}

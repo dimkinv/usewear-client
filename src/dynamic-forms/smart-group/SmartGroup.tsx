@@ -1,5 +1,5 @@
 import { Card, CardContent } from '@material-ui/core';
-import React from 'react';
+import React, { useState } from 'react';
 import { FormField } from '../smart-form.model';
 import { SmartInput } from '../smart-input/SmartInput';
 
@@ -10,6 +10,8 @@ export interface SmartGroupProps {
 }
 
 export const SmartGroup: React.FC<SmartGroupProps> = (props) => {
+    const [group, setGroup] = useState(props.groupData);
+
     return (
         <Card variant="outlined">
             <CardContent>
@@ -20,7 +22,7 @@ export const SmartGroup: React.FC<SmartGroupProps> = (props) => {
                         inputType={field.inputType}
                         id={field.propertyName}
                         propertyName={field.propertyName}
-                        value={props.groupData[field.propertyName]}
+                        value={group[field.propertyName]}
                         options={field.options}
                         onFieldChange={onFieldChange}
                     />
@@ -31,10 +33,11 @@ export const SmartGroup: React.FC<SmartGroupProps> = (props) => {
 
     function onFieldChange(fieldName: string, value: unknown){
         const updatedGroup = {
-            ...props.groupData,
+            ...group,
             [fieldName]: value
         }
 
+        setGroup(updatedGroup);
         props.onGroupChange(updatedGroup);
     }
 };
