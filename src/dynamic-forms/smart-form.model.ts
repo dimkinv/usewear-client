@@ -12,3 +12,7 @@ export enum SmartInputType {
     multi_select = 'multi_select',
     date = 'date'
   }
+
+export interface GroupData{
+    [id:string]: unknown;
+}

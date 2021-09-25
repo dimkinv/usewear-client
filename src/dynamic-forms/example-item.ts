@@ -116,15 +116,15 @@ export const item = {
         }
     ],
     "generalInfo": {
-        "name": "Working edge ",
+        "name": "Working edge 1",
         "date": "2014-11-11T09:56:42.210Z",
-        "place": "",
+        "place": "test",
         "user": "",
         "_id": "5461e0463bdd6c020045c3cf"
     }
 };
 
-export const generalInfo: FormField[] = [
+export const generalInfoFields: FormField[] = [
     {
         inputType: SmartInputType.text,
         label: 'Name',

@@ -2,8 +2,12 @@ import React from 'react';
 import { AppBar, Toolbar, Typography, createMuiTheme, ThemeProvider, Grid } from '@material-ui/core';
 import './App.css';
 import { green } from '@material-ui/core/colors';
-import { generalInfoOfItemFields, item } from './dynamic-forms/example-item';
+import { generalInfoFields, generalInfoOfItemFields, item, root } from './dynamic-forms/example-item';
 import { SmartGroupController } from './dynamic-forms/smart-group-controller/SmartGroupsController';
+import { GroupData } from './dynamic-forms/smart-form.model';
+import { SmartGroup } from './dynamic-forms/smart-group/SmartGroup';
+
+let mockData = item;
 
 const darkTheme = createMuiTheme({
   palette: {
@@ -18,7 +22,7 @@ const darkTheme = createMuiTheme({
 function App() {
   return (
     <ThemeProvider theme={darkTheme}>
-      <AppBar className="" position="relative" color="secondary">
+      <AppBar className="app-bar" position="relative" color="secondary">
         <Toolbar>
           <Typography variant="h6" color="inherit" noWrap>
             Usewear
@@ -27,23 +31,30 @@ function App() {
       </AppBar>
       <Grid container spacing={3}>
         <Grid item md={4} xs={12}>
-          {/* <SmartGroup fields={generalInfoOfItemFields} isMultiple={true} data={item.generalInfoOfItem[0] as { [id: string]: unknown }} onChange={onGroupChange.bind(null, 'generalInfoOfItemFields')} /> */}
-          <SmartGroupController fields={generalInfoOfItemFields} data={item.generalInfoOfItem} onChange={(groupIndex:number, changedGroup: { [id: string]: unknown }) => onGroupChange(item.generalInfoOfItem, groupIndex, changedGroup)}></SmartGroupController>
+          <SmartGroupController fields={generalInfoOfItemFields} data={mockData.generalInfoOfItem} onChange={(groupIndex: number, changedGroup: GroupData) => onGroupsChange(item.generalInfoOfItem, groupIndex, changedGroup)}></SmartGroupController>
         </Grid>
         <Grid item md={4} xs={12}>
-          {/* <SmartGroup fields={generalInfo} data={item.generalInfo as { [id: string]: unknown }} onChange={onGroupChange.bind(null, 'generalInfo')} /> */}
+          <SmartGroup fields={generalInfoFields} groupData={item.generalInfo} onGroupChange={generalInfo => mockData.generalInfo = { ...mockData.generalInfo, ...generalInfo }}></SmartGroup>
         </Grid>
         <Grid item md={4} xs={12}>
-          {/* <SmartGroup fields={root} data={item as { [id: string]: unknown }} onChange={onGroupChange.bind(null, 'item')} /> */}
+          <SmartGroup fields={root} groupData={mockData} onGroupChange={onItemRootUpdate} />
         </Grid>
 
       </Grid>
     </ThemeProvider>
   );
 
-  function onGroupChange(groups: { [id: string]: unknown }[], groupIndex: number, changedGroup: { [id: string]: unknown }) {
+  function onGroupsChange(groups: GroupData[], groupIndex: number, changedGroup: GroupData) {
     groups[groupIndex] = changedGroup;
-    console.log(item)
+    console.log(mockData)
+  }
+
+  function onItemRootUpdate(updatedItem: GroupData) {
+    mockData = {
+      ...mockData,
+      ...updatedItem,
+
+    }
   }
 }
 
