@@ -1,7 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { Item } from "../models/item";
+import { fetchItemsByTypeThunk } from "./items.thunks";
 
 interface ItemsState {
-    items: unknown[];
+    items: Item[];
 }
 
 export const itemsSlice = createSlice({
@@ -10,9 +12,14 @@ export const itemsSlice = createSlice({
         items: []
     } as ItemsState,
     reducers: {
-        setItems: (state, action: PayloadAction<unknown[]>) => {
+        setItems: (state, action: PayloadAction<Item[]>) => {
             state.items = action.payload;
         }
+    },
+    extraReducers(builder){
+        builder.addCase(fetchItemsByTypeThunk.fulfilled, (state, action)=>{
+            state.items = action.payload
+        });
     }
 });
 
