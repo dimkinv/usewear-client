@@ -34,7 +34,7 @@ function App() {
           <Route path='/items/:type'>
             <ItemsPage />
           </Route>
-          <Route path='/item-details'>
+          <Route path='/item-details/:id'>
             <ItemDetailsPage />
           </Route>
         </Switch>
