@@ -1,0 +1,1 @@
+export type ItemType = 'experimental' | 'archaeological'; 

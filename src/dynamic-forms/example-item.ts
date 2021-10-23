@@ -1,4 +1,4 @@
-import { FormField, SmartInputType } from "./smart-form.model";
+import { FormFieldMetadata, SmartInputType } from "./smart-form.model";
 
 export const item = {
     "_id": "5461e0463bdd6c020045c3c6",
@@ -124,7 +124,7 @@ export const item = {
     }
 };
 
-export const generalInfoFields: FormField[] = [
+export const generalInfoFields: FormFieldMetadata[] = [
     {
         inputType: SmartInputType.text,
         label: 'Name',
@@ -147,7 +147,7 @@ export const generalInfoFields: FormField[] = [
     }
 ];
 
-export const root: FormField[] = [
+export const root: FormFieldMetadata[] = [
 
     {
         inputType: SmartInputType.text,
@@ -166,7 +166,7 @@ export const root: FormField[] = [
     }
 ]
 
-export const generalInfoOfItemFields: FormField[] = [
+export const generalInfoOfItemFields: FormFieldMetadata[] = [
     {
         inputType: SmartInputType.text,
         label: 'Name',

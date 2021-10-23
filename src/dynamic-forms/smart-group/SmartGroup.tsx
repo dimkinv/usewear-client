@@ -1,13 +1,14 @@
 import './SmartGroup.css';
 import { Card, CardContent } from '@mui/material';
 import React, { useState } from 'react';
-import { FormField } from '../smart-form.model';
+import { FormFieldMetadata } from '../smart-form.model';
 import { SmartInput } from '../smart-input/SmartInput';
+import { DynamicGroup, DynamicInputType } from '../dynamic-forms-types';
 
 export interface SmartGroupProps {
-    fields: FormField[];
-    groupData: { [id: string]: unknown };
-    onGroupChange: (group: { [id: string]: unknown }) => void;
+    fieldsMetadata: FormFieldMetadata[];
+    groupData: DynamicGroup;
+    onGroupChange: (group: DynamicGroup) => void;
 }
 
 export const SmartGroup: React.FC<SmartGroupProps> = (props) => {
@@ -16,7 +17,7 @@ export const SmartGroup: React.FC<SmartGroupProps> = (props) => {
     return (
         <Card variant="outlined">
             <CardContent>
-                {props.fields.map((field, fieldIndex) =>
+                {props.fieldsMetadata.map((field, fieldIndex) =>
                     <SmartInput
                         className="smart-input"
                         key={fieldIndex}
@@ -33,7 +34,7 @@ export const SmartGroup: React.FC<SmartGroupProps> = (props) => {
         </Card>
     )
 
-    function onFieldChange(fieldName: string, value: unknown){
+    function onFieldChange(fieldName: string, value: DynamicInputType){
         const updatedGroup = {
             ...group,
             [fieldName]: value

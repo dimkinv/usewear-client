@@ -1,12 +1,13 @@
 import { FormControl, TextField } from '@mui/material';
 import React, { PropsWithChildren, useState } from 'react';
-import { FormField, SmartInputType } from '../smart-form.model';
+import { DynamicInputType } from '../dynamic-forms-types';
+import { FormFieldMetadata, SmartInputType } from '../smart-form.model';
 import { MultiSelect } from './MultiSelect';
 
-export interface SmartInputProps extends FormField {
+export interface SmartInputProps extends FormFieldMetadata {
   id: string;
-  value: unknown;
-  onFieldChange: (fieldName: string, value: unknown) => void;
+  value: DynamicInputType;
+  onFieldChange: (fieldName: string, value: DynamicInputType) => void;
   className?: string;
 }
 
@@ -78,7 +79,7 @@ export const SmartInput: React.FC<SmartInputProps> = (props: PropsWithChildren<S
     }
   }
 
-  function onValueChange(element: React.ChangeEvent<{ value: unknown }>) {
+  function onValueChange(element: React.ChangeEvent<{ value: DynamicInputType }>) {
     setValue(element.target.value);
     props.onFieldChange(props.propertyName, element.target.value);
   }

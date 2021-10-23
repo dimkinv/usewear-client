@@ -1,4 +1,4 @@
-export interface FormField{
+export interface FormFieldMetadata{
     propertyName: string;
     label:string;
     placeholder?: string;

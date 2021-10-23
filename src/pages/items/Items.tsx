@@ -2,7 +2,7 @@ import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory, useParams } from 'react-router-dom';
-import { Item } from "../../models/item";
+import { Item } from "../../models/item/item.model";
 import { setSelectedItem } from "../../store/items.slice";
 import { fetchItemsByTypeThunk } from "../../store/items.thunks";
 import { typedUseSelector } from "../../store/store";

@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Item } from "../models/item";
+import { Item } from "../models/item/item.model";
 import { fetchItemByIdThunk, fetchItemsByTypeThunk } from "./items.thunks";
 
 interface ItemsState {
@@ -26,8 +26,8 @@ export const itemsSlice = createSlice({
             state.items = action.payload
         });
 
-        builder.addCase(fetchItemByIdThunk.fulfilled, (state, item)=>{
-            state.selectedItem = item;
+        builder.addCase(fetchItemByIdThunk.fulfilled, (state, action)=>{
+            state.selectedItem = action.payload;
         });
     }
 });
