@@ -6,6 +6,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { ItemDetailsPage } from './pages/item-details/ItemDetails';
 import { ItemsPage } from './pages/items/Items';
 import { green } from '@mui/material/colors';
+import { typedUseSelector } from './store/store';
 
 const darkTheme = createTheme({
   palette: {
@@ -20,13 +21,14 @@ const darkTheme = createTheme({
 });
 
 function App() {
+  const pageTitle = typedUseSelector(store => store.mainStore.pageTitle)
   return (
     <BrowserRouter>
       <ThemeProvider theme={darkTheme}>
         <AppBar className="app-bar" position="relative" color="secondary">
           <Toolbar>
             <Typography variant="h6" color="inherit" noWrap>
-              Usewear
+              {pageTitle}
             </Typography>
           </Toolbar>
         </AppBar>

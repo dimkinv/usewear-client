@@ -7,7 +7,7 @@ import { generalInfoOfItemFields, item, generalInfoFields, root } from "../../dy
 import { GroupData } from "../../dynamic-forms/smart-form.model";
 import { SmartGroupController } from "../../dynamic-forms/smart-group-controller/SmartGroupsController";
 import { SmartGroup } from "../../dynamic-forms/smart-group/SmartGroup";
-import { fetchItemByIdThunk } from "../../store/items.thunks";
+import { fetchItemByIdThunk } from "../../store/items/items.thunks";
 import { typedUseSelector } from "../../store/store";
 
 let mockData = item;

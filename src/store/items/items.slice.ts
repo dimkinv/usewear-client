@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Item } from "../models/item/item.model";
+import { Item } from "../../models/item/item.model";
 import { fetchItemByIdThunk, fetchItemsByTypeThunk } from "./items.thunks";
 
 interface ItemsState {

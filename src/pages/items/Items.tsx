@@ -3,8 +3,9 @@ import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory, useParams } from 'react-router-dom';
 import { Item } from "../../models/item/item.model";
-import { setSelectedItem } from "../../store/items.slice";
-import { fetchItemsByTypeThunk } from "../../store/items.thunks";
+import { setSelectedItem } from "../../store/items/items.slice";
+import { fetchItemsByTypeThunk } from "../../store/items/items.thunks";
+import { setPageTitle } from "../../store/main/main.slice";
 import { typedUseSelector } from "../../store/store";
 import { ItemsPageParams } from "./items-page-params";
 
@@ -15,6 +16,7 @@ export const ItemsPage: React.FC = () => {
 
     useEffect(() => {
         dispatch(fetchItemsByTypeThunk(type));
+        dispatch(setPageTitle(`Usewear - ${type}`));
     }, [dispatch, type]);
 
     const items = typedUseSelector(state => state.itemsStore.items);
