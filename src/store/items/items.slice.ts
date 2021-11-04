@@ -1,34 +1,65 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Item } from "../../models/item/item.model";
-import { fetchItemByIdThunk, fetchItemsByTypeThunk } from "./items.thunks";
+import { fetchItemByIdThunk, fetchItemsByTypeThunk, fetchListOptionsThunk } from "./items.thunks";
 
 interface ItemsState {
     items: Item[];
     selectedItem: Item | null;
+    listOptions: { [id: string]: string[] }
 }
 
 export const itemsSlice = createSlice({
     name: 'items',
     initialState: {
         items: [],
-        selectedItem: null
+        selectedItem: null,
+        listOptions: {}
     } as ItemsState,
     reducers: {
         setItems: (state, action: PayloadAction<Item[]>) => {
-            state.items = action.payload;
+            return {
+                ...state,
+                items: action.payload
+            }
         },
         setSelectedItem: (state, action: PayloadAction<Item>) => {
-            state.selectedItem = action.payload;
+            return {
+                ...state,
+                selectedItem: action.payload
+            }
         }
     },
-    extraReducers(builder){
-        builder.addCase(fetchItemsByTypeThunk.fulfilled, (state, action)=>{
-            state.items = action.payload
+    extraReducers(builder) {
+        builder.addCase(fetchItemsByTypeThunk.fulfilled, (state, action) => {
+            return {
+                ...state,
+                items: action.payload
+            }
         });
 
-        builder.addCase(fetchItemByIdThunk.fulfilled, (state, action)=>{
-            state.selectedItem = action.payload;
+        builder.addCase(fetchItemByIdThunk.fulfilled, (state, action) => {
+            return {
+                ...state,
+                selectedItem: action.payload
+            }
         });
+
+        builder.addCase(fetchListOptionsThunk.fulfilled, (state, action) => {
+            let listOptions: { [id: string]: string[] } = {};
+            for (const listOption of action.payload) {
+                const options = listOptions[listOption.type] ?? [];
+                options.push(listOption.value)
+                listOptions = {
+                    ...listOptions,
+                    [listOption.type]: options
+                }
+            }
+
+            return {
+                ...state,
+                listOptions
+            }
+        })
     }
 });
 

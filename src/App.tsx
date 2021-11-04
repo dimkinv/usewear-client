@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
 import { AppBar, Toolbar, Typography, ThemeProvider } from '@mui/material';
 import { createTheme } from '@mui/material/styles';
@@ -7,6 +7,8 @@ import { ItemDetailsPage } from './pages/item-details/ItemDetails';
 import { ItemsPage } from './pages/items/Items';
 import { green } from '@mui/material/colors';
 import { typedUseSelector } from './store/store';
+import { useDispatch } from 'react-redux';
+import { fetchListOptionsThunk } from './store/items/items.thunks';
 
 const darkTheme = createTheme({
   palette: {
@@ -21,6 +23,11 @@ const darkTheme = createTheme({
 });
 
 function App() {
+  const dispatch = useDispatch();
+  useEffect(()=>{
+    dispatch(fetchListOptionsThunk());
+  }, [dispatch])
+
   const pageTitle = typedUseSelector(store => store.mainStore.pageTitle)
   return (
     <BrowserRouter>
