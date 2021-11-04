@@ -1,4 +1,4 @@
-import { FormControl, TextField } from '@mui/material';
+import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField } from '@mui/material';
 import React, { PropsWithChildren, useState } from 'react';
 import { DynamicInputType } from '../dynamic-forms-types';
 import { FormFieldMetadata, SmartInputType } from '../smart-form.model';
@@ -56,24 +56,24 @@ export const SmartInput: React.FC<SmartInputProps> = (props: PropsWithChildren<S
             onChange={onValueChange}
           />
         </FormControl>
-      // case SmartInputType.select:
-      //   return <FormControl fullWidth>
-      //     <InputLabel id={`label_${uniqueControlId}`}>{props.label}</InputLabel>
-      //     <Select
-      //       fullWidth
-      //       placeholder={props.placeholder}
-      //       labelId={`label_${uniqueControlId}`}
-      //       id={uniqueControlId}
-      //       value={props.value}
-      //       onChange={onValueChange}
-      //     >
-      //       {props.options?.map((value) => (
-      //         <MenuItem key={value} value={value}>
-      //           {value}
-      //         </MenuItem>
-      //       ))}
-      //     </Select>
-      //   </FormControl>
+      case SmartInputType.select:
+        return <FormControl fullWidth>
+          <InputLabel id={`label_${uniqueControlId}`}>{props.label}</InputLabel>
+          <Select
+            fullWidth
+            placeholder={props.placeholder}
+            labelId={`label_${uniqueControlId}`}
+            id={uniqueControlId}
+            value={props.value}
+            onChange={onSelectChangeEvent}
+          >
+            {props.options?.map((value) => (
+              <MenuItem key={value} value={value}>
+                {value}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
       case SmartInputType.multi_select:
         return <MultiSelect smartInputProps={props} />
     }
@@ -82,5 +82,9 @@ export const SmartInput: React.FC<SmartInputProps> = (props: PropsWithChildren<S
   function onValueChange(element: React.ChangeEvent<{ value: DynamicInputType }>) {
     setValue(element.target.value);
     props.onFieldChange(props.propertyName, element.target.value);
+  }
+
+  function onSelectChangeEvent(event: SelectChangeEvent<DynamicInputType>){
+
   }
 }

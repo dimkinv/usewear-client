@@ -7,6 +7,7 @@ import { SmartGroup } from '../smart-group/SmartGroup';
 import './SmartGroupsController.css';
 
 export interface SmartGroupControllerProps {
+    title: string;
     data: DynamicGroup[];
     fields: FormFieldMetadata[];
     onChange: (groupIndex: number, changedGroup: DynamicGroup) => void;
@@ -18,6 +19,7 @@ export const SmartGroupController: React.FC<SmartGroupControllerProps> = (props:
     return (
         <Card variant="elevation">
             <CardContent>
+                <h3>{props.title}</h3>
                 {
                     groups.map((group, index) =>
                         <div className="group" key={index}>
