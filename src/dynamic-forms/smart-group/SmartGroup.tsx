@@ -7,7 +7,7 @@ import { DynamicGroup, DynamicInputType } from '../dynamic-forms-types';
 
 export interface SmartGroupProps {
     standalone?: boolean;
-    title?:string;
+    title?: string;
     fieldsMetadata: FormFieldMetadata[];
     groupData: DynamicGroup;
     onGroupChange: (group: DynamicGroup) => void;
@@ -32,7 +32,6 @@ export const SmartGroup: React.FC<SmartGroupProps> = (props) => {
                                     id={field.propertyName}
                                     propertyName={field.propertyName}
                                     value={group[field.propertyName]}
-                                    options={field.options}
                                     onFieldChange={onFieldChange}
                                 />
                             )}
@@ -53,7 +52,6 @@ export const SmartGroup: React.FC<SmartGroupProps> = (props) => {
                                 id={field.propertyName}
                                 propertyName={field.propertyName}
                                 value={group[field.propertyName]}
-                                options={field.options}
                                 onFieldChange={onFieldChange}
                             />
                         )}

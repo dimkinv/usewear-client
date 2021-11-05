@@ -12,6 +12,7 @@ import { setSelectedItem } from "../../store/items/items.slice";
 import { fetchItemByIdThunk } from "../../store/items/items.thunks";
 import { typedUseSelector } from "../../store/store";
 import styled from 'styled-components';
+import { Item } from "../../models/item/item.model";
 
 const GridContainer = styled(Grid)`
     margin-top: 10px;
@@ -32,38 +33,40 @@ export const ItemDetailsPage: React.FC = () => {
         <>
             <GridContainer container spacing={3}>
                 <Grid item md={4} xs={12}>
-                    <SmartGroupController title="General Info of Item" fields={generalInfoOfItemFields} data={selectedItem.generalInfoOfItem as unknown as DynamicGroup[]} onChange={(groupIndex: number, changedGroup: GroupData) => onGroupsChange(selectedItem.generalInfoOfItem as unknown as DynamicGroup[], groupIndex, changedGroup)}></SmartGroupController>
+                    <SmartGroupController title="General Info of Item" fields={generalInfoOfItemFields} data={selectedItem.generalInfoOfItem} onChange={groups => onGroupsChanged('generalInfoOfItem', groups)}></SmartGroupController>
                 </Grid>
                 <Grid item md={4} xs={12}>
-                    <SmartGroup title="General Info" standalone={true} fieldsMetadata={generalInfoFields} groupData={selectedItem.generalInfo as unknown as DynamicGroup} onGroupChange={generalInfo => selectedItem.generalInfo = { ...selectedItem.generalInfo, ...generalInfo }}></SmartGroup>
+                    <SmartGroup title="General Info" standalone={true} fieldsMetadata={generalInfoFields} groupData={selectedItem.generalInfo} onGroupChange={group => onGroupsChanged('generalInfo', group)}></SmartGroup>
                 </Grid>
                 <Grid item md={4} xs={12}>
-                    <SmartGroup title="Main" standalone={true} fieldsMetadata={root} groupData={selectedItem as unknown as DynamicGroup} onGroupChange={onItemRootUpdate} />
+                    <SmartGroup title="Main" standalone={true} fieldsMetadata={root} groupData={selectedItem as unknown as DynamicGroup} onGroupChange={onRootChanged} />
                 </Grid>
             </GridContainer>
 
             <GridContainer container spacing={3}>
                 <Grid item md={4} xs={12}>
-                    <SmartGroupController title="Morphology of the Edge" fields={morphologyEdgefields} data={selectedItem.morphologyOfTheEdge as unknown as DynamicGroup[]} onChange={(groupIndex: number, changedGroup: GroupData) => onGroupsChange(selectedItem.generalInfoOfItem as unknown as DynamicGroup[], groupIndex, changedGroup)}></SmartGroupController>
+                    <SmartGroupController title="Morphology of the Edge" fields={morphologyEdgefields} data={selectedItem.morphologyOfTheEdge} onChange={groups => onGroupsChanged('morphologyOfTheEdge', groups)}></SmartGroupController>
                 </Grid>
             </GridContainer>
 
         </>
     )
 
-    function onGroupsChange(groups: GroupData[], groupIndex: number, changedGroup: GroupData) {
-        groups[groupIndex] = changedGroup;
+    function onGroupsChanged(grouPropertyName: string, changedGroup: DynamicGroup | DynamicGroup[]) {
+        const updatedItem: Item = {
+            ...selectedItem!
+        };
+
+        updatedItem[grouPropertyName] = changedGroup;
+        dispatch(setSelectedItem(updatedItem));
     }
 
-    function onItemRootUpdate(updatedItem: GroupData) {
-        if (!selectedItem) {
-            return;
+    function onRootChanged(changedGroup: DynamicGroup){
+        const updatedItem: Item = {
+            ... selectedItem!,
+            ...changedGroup as any // need to find a solution to this any 🤦
         }
 
-        dispatch(setSelectedItem({
-            ...selectedItem,
-            ...updatedItem
-        }));
-
+        dispatch(setSelectedItem(updatedItem));
     }
 }

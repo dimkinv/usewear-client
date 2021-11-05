@@ -1,5 +1,6 @@
 import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField } from '@mui/material';
-import React, { PropsWithChildren, useState } from 'react';
+import React, { PropsWithChildren, useEffect, useState } from 'react';
+import { typedUseSelector } from '../../store/store';
 import { DynamicInputType } from '../dynamic-forms-types';
 import { FormFieldMetadata, SmartInputType } from '../smart-form.model';
 import { MultiSelect } from './MultiSelect';
@@ -12,9 +13,14 @@ export interface SmartInputProps extends FormFieldMetadata {
 }
 
 export const SmartInput: React.FC<SmartInputProps> = (props: PropsWithChildren<SmartInputProps>) => {
-
-  validateSelect(props);
+  
+  const currentSelectOptions = typedUseSelector(state => state.itemsStore.listOptions[props.propertyName]);
   const [value, setValue] = useState(props.value ?? initializeValue(props.value, props.inputType));
+  const [options, setOptions] = useState<string[]>([]);
+
+  useEffect(()=>{
+    setOptions(currentSelectOptions);
+  }, [currentSelectOptions]);
 
   return (
     <div className={props.className}>
@@ -26,20 +32,12 @@ export const SmartInput: React.FC<SmartInputProps> = (props: PropsWithChildren<S
     switch (type) {
       case SmartInputType.date:
         return new Date();
-      case SmartInputType.text:
+      case SmartInputType.text || SmartInputType.select:
         return '';
       default:
         return [];
     }
 
-  }
-
-  function validateSelect(props: React.PropsWithChildren<SmartInputProps>) {
-    if (props.inputType === SmartInputType.select || props.inputType === SmartInputType.multi_select) {
-      if (!props.options || !(props.options instanceof Array)) {
-        throw new Error('Invalid value for multi_select, did you forget to pass string[] type as value?');
-      }
-    }
   }
 
   function renderComponent(props: PropsWithChildren<SmartInputProps>) {
@@ -67,7 +65,7 @@ export const SmartInput: React.FC<SmartInputProps> = (props: PropsWithChildren<S
             value={props.value}
             onChange={onSelectChangeEvent}
           >
-            {props.options?.map((value) => (
+            {options?.map((value) => (
               <MenuItem key={value} value={value}>
                 {value}
               </MenuItem>
@@ -85,6 +83,7 @@ export const SmartInput: React.FC<SmartInputProps> = (props: PropsWithChildren<S
   }
 
   function onSelectChangeEvent(event: SelectChangeEvent<DynamicInputType>){
-
+    setValue(event.target.value);
+    props.onFieldChange(props.propertyName, event.target.value);
   }
 }

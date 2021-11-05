@@ -12,7 +12,7 @@ export const generalInfoOfItemFields: FormFieldMetadata[] = [
         propertyName: 'rawMaterial',
     },
     {
-        inputType: SmartInputType.text,
+        inputType: SmartInputType.select,
         label: 'Typology',
         propertyName: 'typology',
     },

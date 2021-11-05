@@ -1,4 +1,7 @@
 import { FormControl, InputLabel, Select, MenuItem, Chip } from "@mui/material";
+import { useState } from "react";
+import { typedUseSelector } from "../../store/store";
+import { SmartInputType } from "../smart-form.model";
 import { SmartInputProps } from "./SmartInput";
 
 export interface MultiSelectProps {
@@ -9,6 +12,13 @@ export interface MultiSelectProps {
 export const MultiSelect: React.FC<MultiSelectProps> = (props) => {
   const {smartInputProps} = props;
   
+  const [options, setOptions] = useState<string[]>([])
+
+  if(props.smartInputProps.inputType === SmartInputType.multi_select){
+    const currentSelectOptions = typedUseSelector(state => state.itemsStore.listOptions[props.smartInputProps.propertyName]);
+    setOptions(currentSelectOptions);
+  }
+
   return (
     <FormControl fullWidth>
       <InputLabel id={`label_${smartInputProps.id}`}>Chip</InputLabel>
@@ -20,7 +30,7 @@ export const MultiSelect: React.FC<MultiSelectProps> = (props) => {
         onChange={event => smartInputProps.onFieldChange(smartInputProps.propertyName, event.target.value as string[])}
         renderValue={renderValues}
       >
-        {smartInputProps.options?.map((value) => (
+        {options.map((value) => (
           <MenuItem key={value} value={value}>
             {value}
           </MenuItem>

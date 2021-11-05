@@ -10,7 +10,7 @@ export interface SmartGroupControllerProps {
     title: string;
     data: DynamicGroup[];
     fields: FormFieldMetadata[];
-    onChange: (groupIndex: number, changedGroup: DynamicGroup) => void;
+    onChange: (changedGroups: DynamicGroup[]) => void;
 }
 
 export const SmartGroupController: React.FC<SmartGroupControllerProps> = (props: PropsWithChildren<SmartGroupControllerProps>) => {
@@ -23,7 +23,7 @@ export const SmartGroupController: React.FC<SmartGroupControllerProps> = (props:
                 {
                     groups.map((group, index) =>
                         <div className="group" key={index}>
-                            <SmartGroup fieldsMetadata={props.fields} groupData={group} onGroupChange={group => props.onChange(index, group)}></SmartGroup>
+                            <SmartGroup fieldsMetadata={props.fields} groupData={group} onGroupChange={group => onGroupChange(index, group)}></SmartGroup>
                         </div>)
                 }
             </CardContent>
@@ -38,10 +38,23 @@ export const SmartGroupController: React.FC<SmartGroupControllerProps> = (props:
         </Card>
     )
 
+    function onGroupChange(index: number, group: DynamicGroup){
+        const updatedGroups = [
+            ...groups
+        ];
+        updatedGroups[index] = group;
+
+        setGroups(updatedGroups);
+        props.onChange(updatedGroups);
+    }
+
     function onGroupAdd() {
         setGroups([
             ...groups,
             {}
         ]);
+        props.onChange(groups);
     }
+
+   
 }

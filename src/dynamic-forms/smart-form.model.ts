@@ -3,7 +3,6 @@ export interface FormFieldMetadata{
     label:string;
     placeholder?: string;
     inputType: SmartInputType,
-    options?: string[]
 }
 
 export enum SmartInputType {

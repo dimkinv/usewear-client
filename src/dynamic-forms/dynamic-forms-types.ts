@@ -1,4 +1,4 @@
 
 export type DynamicInputType = string | string[] | Date | number;
-export type DynamicGroup =  { [id: string]: DynamicInputType };
+export interface DynamicGroup { [id: string]: DynamicInputType };
 
