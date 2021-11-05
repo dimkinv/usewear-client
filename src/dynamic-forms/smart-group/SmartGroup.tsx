@@ -14,7 +14,7 @@ export interface SmartGroupProps {
 }
 
 export const SmartGroup: React.FC<SmartGroupProps> = (props) => {
-    const [group, setGroup] = useState(props.groupData);
+    const [group, setGroup] = useState(props.groupData || {});
 
     return (
         <>

@@ -5,13 +5,14 @@ import { useParams } from "react-router";
 import { DynamicGroup } from "../../dynamic-forms/dynamic-forms-types";
 import { SmartGroupController } from "../../dynamic-forms/smart-group-controller/SmartGroupsController";
 import { SmartGroup } from "../../dynamic-forms/smart-group/SmartGroup";
-import { generalInfoOfItemFields, generalInfoFields, root } from "../../models/item/dynamic-form";
+import { generalInfoOfItemFields, generalInfoFields, root, preservationFields } from "../../models/item/dynamic-form";
 import { morphologyEdgefields } from "../../models/item/dynamic-form/morphology-edge.fields";
 import { setSelectedItem } from "../../store/items/items.slice";
 import { fetchItemByIdThunk } from "../../store/items/items.thunks";
 import { typedUseSelector } from "../../store/store";
 import styled from 'styled-components';
 import { Item } from "../../models/item/item.model";
+import { experimentalDataFileds } from "../../models/item/dynamic-form/experimental-data.fileds";
 
 const GridContainer = styled(Grid)`
     margin-top: 10px;
@@ -45,6 +46,12 @@ export const ItemDetailsPage: React.FC = () => {
             <GridContainer container spacing={3}>
                 <Grid item md={4} xs={12}>
                     <SmartGroupController title="Morphology of the Edge" fields={morphologyEdgefields} data={selectedItem.morphologyOfTheEdge} onChange={groups => onGroupsChanged('morphologyOfTheEdge', groups)}></SmartGroupController>
+                </Grid>
+                <Grid item md={4} xs={12}>
+                    <SmartGroupController title="Experimental Data" fields={experimentalDataFileds} data={selectedItem.experimentalData} onChange={groups => onGroupsChanged('experimentalData', groups)}></SmartGroupController>
+                </Grid>
+                <Grid item md={4} xs={12}>
+                    <SmartGroup title="Preservation" standalone={true} fieldsMetadata={preservationFields} groupData={selectedItem.preservation} onGroupChange={group => onGroupsChanged('preservation', group)} />
                 </Grid>
             </GridContainer>
 
