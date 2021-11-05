@@ -1,6 +1,6 @@
-export interface FormFieldMetadata{
+export interface FormFieldMetadata {
     propertyName: string;
-    label:string;
+    label: string;
     placeholder?: string;
     inputType: SmartInputType,
 }
@@ -10,8 +10,4 @@ export enum SmartInputType {
     select = 'select',
     multi_select = 'multi_select',
     date = 'date'
-  }
-
-export interface GroupData{
-    [id:string]: unknown;
 }

@@ -3,7 +3,6 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router";
 import { DynamicGroup } from "../../dynamic-forms/dynamic-forms-types";
-import { GroupData } from "../../dynamic-forms/smart-form.model";
 import { SmartGroupController } from "../../dynamic-forms/smart-group-controller/SmartGroupsController";
 import { SmartGroup } from "../../dynamic-forms/smart-group/SmartGroup";
 import { generalInfoOfItemFields, generalInfoFields, root } from "../../models/item/dynamic-form";
@@ -63,7 +62,7 @@ export const ItemDetailsPage: React.FC = () => {
 
     function onRootChanged(changedGroup: DynamicGroup){
         const updatedItem: Item = {
-            ... selectedItem!,
+            ...selectedItem!,
             ...changedGroup as any // need to find a solution to this any 🤦
         }
 
