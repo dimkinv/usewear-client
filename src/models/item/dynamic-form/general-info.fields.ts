@@ -8,27 +8,7 @@ export const generalInfoFields: FormFieldMetadata[] = [
     },
     {
         inputType: SmartInputType.text,
-        label: 'Date',
-        propertyName: 'date',
-    },
-    {
-        inputType: SmartInputType.text,
-        label: 'Place',
-        propertyName: 'place',
-    },
-    {
-        inputType: SmartInputType.text,
-        label: 'User',
-        propertyName: 'user',
-    },
-    {
-        inputType: SmartInputType.text,
-        label: 'Knapper',
-        propertyName: 'knapper',
-    },
-    {
-        inputType: SmartInputType.text,
-        label: 'Working Edged',
+        label: 'Working Edges',
         propertyName: 'workingEdges',
     },
     {

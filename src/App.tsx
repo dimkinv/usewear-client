@@ -22,9 +22,9 @@ const darkTheme = createTheme({
   },
 });
 
-function App() {
+export const App: React.FC = () => {
   const dispatch = useDispatch();
-  useEffect(()=>{
+  useEffect(() => {
     dispatch(fetchListOptionsThunk());
   }, [dispatch])
 

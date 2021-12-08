@@ -1,7 +1,8 @@
 import Grid from "@mui/material/Grid";
-import React from "react";
+import React, { useEffect } from "react";
+import styled from 'styled-components';
 import { useDispatch } from "react-redux";
-import { useParams } from "react-router";
+import { useHistory, useParams } from "react-router";
 import { DynamicGroup } from "../../dynamic-forms/dynamic-forms-types";
 import { SmartGroupController } from "../../dynamic-forms/smart-group-controller/SmartGroupsController";
 import { SmartGroup } from "../../dynamic-forms/smart-group/SmartGroup";
@@ -10,24 +11,30 @@ import { morphologyEdgefields } from "../../models/item/dynamic-form/morphology-
 import { setSelectedItem } from "../../store/items/items.slice";
 import { fetchItemByIdThunk } from "../../store/items/items.thunks";
 import { typedUseSelector } from "../../store/store";
-import styled from 'styled-components';
 import { Item } from "../../models/item/item.model";
 import { experimentalDataFileds } from "../../models/item/dynamic-form/experimental-data.fileds";
+import { setPageTitle } from "../../store/main/main.slice";
+import { SpeedDial, SpeedDialAction, SpeedDialIcon } from "@mui/material";
+import { Cancel, Save } from '@mui/icons-material';
 
 const GridContainer = styled(Grid)`
     margin-top: 10px;
 `
 
 
-
 export const ItemDetailsPage: React.FC = () => {
-    const selectedItem = typedUseSelector(state => state.itemsStore.selectedItem);
     const dispatch = useDispatch();
+    const history = useHistory();
+
+    const selectedItem = typedUseSelector(state => state.itemsStore.selectedItem);
     const { id } = useParams<{ id: string }>();
 
-    if (!selectedItem) {
-        dispatch(fetchItemByIdThunk(id));
-    }
+    useEffect(() => {
+        if (!selectedItem) {
+            dispatch(fetchItemByIdThunk(id));
+        }
+        dispatch(setPageTitle(`Usewear - Experimental Item ${selectedItem ? selectedItem['number'] : '???'}`))
+    }, [dispatch, id, selectedItem]);
 
     return (selectedItem &&
         <>
@@ -54,7 +61,15 @@ export const ItemDetailsPage: React.FC = () => {
                     <SmartGroup title="Preservation" standalone={true} fieldsMetadata={preservationFields} groupData={selectedItem.preservation} onGroupChange={group => onGroupsChanged('preservation', group)} />
                 </Grid>
             </GridContainer>
-
+            {/* <OperationButtons primaryButtonType="save" secondaryButtonType="cancel" /> */}
+            <SpeedDial
+                ariaLabel="SpeedDial basic example"
+                sx={{ position: 'fixed', bottom: 32, right: 32 }}
+                icon={<SpeedDialIcon />}
+            >
+                <SpeedDialAction icon={<Cancel color="error" fontSize="small" />} tooltipTitle="Discard" onClick={() => history.goBack()} />
+                <SpeedDialAction icon={<Save color="primary" fontSize="medium" />} tooltipTitle="Save Item" />
+            </SpeedDial>
         </>
     )
 
@@ -67,7 +82,7 @@ export const ItemDetailsPage: React.FC = () => {
         dispatch(setSelectedItem(updatedItem));
     }
 
-    function onRootChanged(changedGroup: DynamicGroup){
+    function onRootChanged(changedGroup: DynamicGroup) {
         const updatedItem: Item = {
             ...selectedItem!,
             ...changedGroup as any // need to find a solution to this any 🤦

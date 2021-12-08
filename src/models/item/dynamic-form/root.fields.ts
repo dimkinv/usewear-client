@@ -4,17 +4,35 @@ export const root: FormFieldMetadata[] = [
 
     {
         inputType: SmartInputType.text,
-        label: 'Site',
-        propertyName: 'site',
+        label: 'Number',
+        propertyName: 'number',
     },
     {
         inputType: SmartInputType.text,
-        label: 'Place',
-        propertyName: 'place',
+        label: 'Group',
+        propertyName: 'group',
     },
     {
         inputType: SmartInputType.text,
-        label: 'Area',
-        propertyName: 'area',
-    }
+        label: 'Knapper',
+        propertyName: 'knapper',
+    },
 ]
+
+// date = '';
+// number = '';
+// group = '';
+// knapper = '';
+// workingEdges: string | null = null;
+// itemType: 'arch' | 'exp' | null = null;
+// site = '';
+// place = '';
+// area = '';
+// layers = '';
+// locus = '';
+// sq = '';
+// sqN = '';
+// subSq = '';
+// hMax = '';
+// hMin = '';
+// remarks = '';
