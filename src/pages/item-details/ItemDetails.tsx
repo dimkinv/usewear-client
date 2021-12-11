@@ -85,7 +85,7 @@ export const ItemDetailsPage: React.FC = () => {
     function onRootChanged(changedGroup: DynamicGroup) {
         const updatedItem: Item = {
             ...selectedItem!,
-            ...changedGroup as any // need to find a solution to this any 🤦
+            ...changedGroup
         }
 
         dispatch(setSelectedItem(updatedItem));
