@@ -1,3 +1,5 @@
+[![CI](https://github.com/dimkinv/usewear-client/actions/workflows/main.yml/badge.svg)](https://github.com/dimkinv/usewear-client/actions/workflows/main.yml)
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
