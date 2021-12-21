@@ -10,7 +10,7 @@ export const fetchItemsByTypeThunk = createAsyncThunk('api/items', async (itemTy
 
 export const fetchItemByIdThunk = createAsyncThunk('api/itemById', async (id: string): Promise<Item> => {
     const response = await fetch(`http://localhost:4000/items/${id}`);
-    return await response.json();
+    return response.json();
 });
 
 export const fetchListOptionsThunk = createAsyncThunk('api/listOptions', async (): Promise<ListOption[]> => {

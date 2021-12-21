@@ -1,5 +1,5 @@
 import Grid from "@mui/material/Grid";
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import styled from 'styled-components';
 import { useDispatch } from "react-redux";
 import { useHistory, useParams } from "react-router";
@@ -27,6 +27,8 @@ export const ItemDetailsPage: React.FC = () => {
     const history = useHistory();
 
     const selectedItem = typedUseSelector(state => state.itemsStore.selectedItem);
+    const modifiedItem = useRef(null);
+    
     const { id } = useParams<{ id: string }>();
 
     useEffect(() => {
@@ -61,9 +63,9 @@ export const ItemDetailsPage: React.FC = () => {
                     <SmartGroup title="Preservation" standalone={true} fieldsMetadata={preservationFields} groupData={selectedItem.preservation} onGroupChange={group => onGroupsChanged('preservation', group)} />
                 </Grid>
             </GridContainer>
-            {/* <OperationButtons primaryButtonType="save" secondaryButtonType="cancel" /> */}
+            
             <SpeedDial
-                ariaLabel="SpeedDial basic example"
+                ariaLabel="menu"
                 sx={{ position: 'fixed', bottom: 32, right: 32 }}
                 icon={<SpeedDialIcon />}
             >

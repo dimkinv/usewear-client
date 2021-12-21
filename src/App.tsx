@@ -3,7 +3,7 @@ import './App.css';
 import { AppBar, Toolbar, Typography, ThemeProvider } from '@mui/material';
 import { createTheme } from '@mui/material/styles';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import { ItemDetailsPage } from './pages/item-details/ItemDetails';
+import { ItemDetailsPage } from './pages/item-details/item-details';
 import { ItemsPage } from './pages/items/Items';
 import { green } from '@mui/material/colors';
 import { typedUseSelector } from './store/store';
