@@ -13,12 +13,12 @@ export interface SmartInputProps extends FormFieldMetadata {
 }
 
 export const SmartInput: React.FC<SmartInputProps> = (props: PropsWithChildren<SmartInputProps>) => {
-  
+
   const currentSelectOptions = typedUseSelector(state => state.itemsStore.listOptions[props.propertyName]);
   const [value, setValue] = useState(props.value ?? initializeValue(props.value, props.inputType));
   const [options, setOptions] = useState<string[]>([]);
 
-  useEffect(()=>{
+  useEffect(() => {
     setOptions(currentSelectOptions);
   }, [currentSelectOptions]);
 
@@ -58,7 +58,7 @@ export const SmartInput: React.FC<SmartInputProps> = (props: PropsWithChildren<S
         return <FormControl fullWidth>
           <InputLabel id={`label_${uniqueControlId}`}>{props.label}</InputLabel>
           <Select
-            fullWidth
+            label={props.label}
             placeholder={props.placeholder}
             labelId={`label_${uniqueControlId}`}
             id={uniqueControlId}
@@ -82,7 +82,7 @@ export const SmartInput: React.FC<SmartInputProps> = (props: PropsWithChildren<S
     props.onFieldChange(props.propertyName, element.target.value);
   }
 
-  function onSelectChangeEvent(event: SelectChangeEvent<DynamicInputType>){
+  function onSelectChangeEvent(event: SelectChangeEvent<DynamicInputType>) {
     setValue(event.target.value);
     props.onFieldChange(props.propertyName, event.target.value);
   }
