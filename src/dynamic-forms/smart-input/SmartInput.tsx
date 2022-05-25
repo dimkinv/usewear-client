@@ -47,6 +47,7 @@ export const SmartInput: React.FC<SmartInputProps> = (props: PropsWithChildren<S
       case SmartInputType.text:
         return <FormControl fullWidth>
           <TextField
+            size="small"
             id={uniqueControlId}
             label={props.label}
             value={value}
@@ -58,6 +59,7 @@ export const SmartInput: React.FC<SmartInputProps> = (props: PropsWithChildren<S
         return <FormControl fullWidth>
           <InputLabel id={`label_${uniqueControlId}`}>{props.label}</InputLabel>
           <Select
+            size="small"
             label={props.label}
             placeholder={props.placeholder}
             labelId={`label_${uniqueControlId}`}
