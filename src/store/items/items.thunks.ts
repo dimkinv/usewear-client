@@ -17,3 +17,19 @@ export const fetchListOptionsThunk = createAsyncThunk('api/listOptions', async (
     const response = await fetch('http://localhost:4000/list-options');
     return await response.json();
 })
+
+export const updateItemThunk = createAsyncThunk('api/updateItem', async (item: Item) => {
+    try {
+        const response = await fetch(`http://localhost:4000/items/${item._id}`, {
+            method: 'PUT',
+            body: JSON.stringify(item),
+            headers: {
+                'content-type': 'application/json'
+            }
+        });
+
+        return await response.json();
+    } catch (error) {
+        throw new Error(`Error updating item ${item._id}`,)
+    }
+});

@@ -2,12 +2,14 @@ import { applyMiddleware, configureStore } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import thunk from 'redux-thunk';
 import { itemsReducer } from './items/items.slice';
+import { loginReducer } from './login/login.slice';
 import { mainReducer } from './main/main.slice';
 
 export const store = configureStore({
     reducer: {
         itemsStore: itemsReducer,
-        mainStore: mainReducer
+        mainStore: mainReducer,
+        loginStore: loginReducer
     },
     enhancers: [applyMiddleware(thunk)]
 });

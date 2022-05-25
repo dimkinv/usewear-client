@@ -13,7 +13,7 @@ const mainSlice = createSlice({
     initialState,
     reducers: {
         setPageTitle: (state, action: PayloadAction<string>) => { state.pageTitle = action.payload }
-    }
+    },
 });
 
 export const { setPageTitle } = mainSlice.actions;

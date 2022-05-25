@@ -1,4 +1,3 @@
-import { Usewear } from './usewear.model';
 import { DynamicGroup, DynamicInputType } from '../../dynamic-forms/dynamic-forms-types';
 
 export interface Item {

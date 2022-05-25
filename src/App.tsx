@@ -9,6 +9,7 @@ import { green } from '@mui/material/colors';
 import { typedUseSelector } from './store/store';
 import { useDispatch } from 'react-redux';
 import { fetchListOptionsThunk } from './store/items/items.thunks';
+import { LoginPage } from './pages/login/Login';
 
 const darkTheme = createTheme({
   palette: {
@@ -34,12 +35,15 @@ export const App: React.FC = () => {
       <ThemeProvider theme={darkTheme}>
         <AppBar className="app-bar" position="relative" color="secondary">
           <Toolbar>
-            <Typography variant="h6" color="inherit" noWrap>
+            <Typography variant="h4" color="inherit" noWrap>
               {pageTitle}
             </Typography>
           </Toolbar>
         </AppBar>
         <Switch>
+          <Route path="/login">
+            <LoginPage />
+          </Route>
           <Route path='/items/:type'>
             <ItemsPage />
           </Route>
