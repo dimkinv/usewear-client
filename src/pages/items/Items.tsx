@@ -1,18 +1,19 @@
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { useHistory, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { ItemType } from "../../models/item-type";
 import { Item } from "../../models/item/item.model";
 import { setSelectedItem } from "../../store/items/items.slice";
 import { fetchItemsByTypeThunk } from "../../store/items/items.thunks";
 import { setPageTitle } from "../../store/main/main.slice";
 import { typedUseSelector } from "../../store/store";
-import { ItemsPageParams } from "./items-page-params";
 
 export const ItemsPage: React.FC = () => {
-    const { type } = useParams<ItemsPageParams>();
+    const params = useParams();
+    const type = params['type'] as ItemType;
     const dispatch = useDispatch();
-    const history = useHistory();
+    const navigation = useNavigate();
 
     useEffect(() => {
         dispatch(fetchItemsByTypeThunk(type));
@@ -43,6 +44,6 @@ export const ItemsPage: React.FC = () => {
 
     function onItemClicked(item: Item) {
         dispatch(setSelectedItem(item));
-        history.push(`/item-details/${item._id}`);
+        navigation(`/item-details/${item._id}`);
     }
 }

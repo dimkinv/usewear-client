@@ -1,6 +1,6 @@
 import Grid from "@mui/material/Grid";
 import React, { useEffect, useRef, useState } from "react";
-import { useHistory, useParams } from "react-router";
+import { useNavigate, useParams } from "react-router-dom";
 import { DynamicGroup } from "../../dynamic-forms/dynamic-forms-types";
 import { generalInfoOfItemFields, generalInfoFields, root, preservationFields } from "../../models/item/item-details-form-fields";
 import { morphologyEdgefields } from "../../models/item/item-details-form-fields/morphology-edge.fields";
@@ -19,10 +19,15 @@ import { usewearPatinaFields } from "../../models/item/usewear-form-fields/patin
 import { usewearMicroFields } from "../../models/item/usewear-form-fields/micro.fields";
 import { usewearResidueFields } from "../../models/item/usewear-form-fields/residue.fields";
 
+const GridChildrenBottomMargin = styled(Grid)`
+> * {
+  margin-bottom: 20px;
+}
+`
 
 export const ItemDetailsPage: React.FC = () => {
   const dispatch = typedUseDispatch();
-  const history = useHistory();
+  const navigation = useNavigate();
 
   const selectedItem = typedUseSelector(state => state.itemsStore.selectedItem);
   const modifiedItem = useRef<Item | null>(selectedItem);
@@ -33,7 +38,7 @@ export const ItemDetailsPage: React.FC = () => {
 
   useEffect(() => {
     async function initialEffect() {
-      if (!selectedItem) {
+      if (!selectedItem && id) {
         const item = await dispatch(fetchItemByIdThunk(id)).unwrap();
         modifiedItem.current = item;
 
@@ -43,12 +48,6 @@ export const ItemDetailsPage: React.FC = () => {
 
     initialEffect();
   }, [dispatch, id, selectedItem]);
-
-  const GridChildrenBottomMargin = styled(Grid)`
-    > * {
-      margin-bottom: 20px;
-    }
-  `
 
   return (modifiedItem.current &&
     <>
@@ -93,7 +92,7 @@ export const ItemDetailsPage: React.FC = () => {
         sx={{ position: 'fixed', bottom: 32, right: 32 }}
         icon={<SpeedDialIcon />}
       >
-        <SpeedDialAction icon={<Cancel color="error" fontSize="small" />} tooltipTitle="Discard" onClick={() => history.goBack()} />
+        <SpeedDialAction icon={<Cancel color="error" fontSize="small" />} tooltipTitle="Discard" onClick={() => navigation(-1)} />
         <SpeedDialAction onClick={saveOrUpdateItem} icon={<Save color="primary" fontSize="medium" />} tooltipTitle="Save Item" />
       </SpeedDial>
     </>

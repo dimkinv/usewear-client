@@ -1,5 +1,5 @@
 import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField } from '@mui/material';
-import React, { PropsWithChildren, useEffect, useState } from 'react';
+import React, { PropsWithChildren, useState } from 'react';
 import { typedUseSelector } from '../../store/store';
 import { DynamicInputType } from '../dynamic-forms-types';
 import { FormFieldMetadata, SmartInputType } from '../smart-form.model';
@@ -16,11 +16,6 @@ export const SmartInput: React.FC<SmartInputProps> = (props: PropsWithChildren<S
 
   const currentSelectOptions = typedUseSelector(state => state.itemsStore.listOptions[props.propertyName]);
   const [value, setValue] = useState(props.value ?? initializeValue(props.value, props.inputType));
-  const [options, setOptions] = useState<string[]>([]);
-
-  useEffect(() => {
-    setOptions(currentSelectOptions);
-  }, [currentSelectOptions]);
 
   return (
     <div className={props.className}>
@@ -58,7 +53,7 @@ export const SmartInput: React.FC<SmartInputProps> = (props: PropsWithChildren<S
       case SmartInputType.select:
         return <FormControl fullWidth>
           <InputLabel id={`label_${uniqueControlId}`}>{props.label}</InputLabel>
-          <Select
+          {currentSelectOptions && <Select
             size="small"
             label={props.label}
             placeholder={props.placeholder}
@@ -67,12 +62,13 @@ export const SmartInput: React.FC<SmartInputProps> = (props: PropsWithChildren<S
             value={props.value}
             onChange={onSelectChangeEvent}
           >
-            {options?.map((value) => (
+            {currentSelectOptions.map((value) => (
               <MenuItem key={value} value={value}>
                 {value}
               </MenuItem>
             ))}
           </Select>
+          }
         </FormControl>
       case SmartInputType.multi_select:
         return <MultiSelect smartInputProps={props} />

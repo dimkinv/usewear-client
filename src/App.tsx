@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import './App.css';
 import { AppBar, Toolbar, Typography, ThemeProvider } from '@mui/material';
 import { createTheme } from '@mui/material/styles';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { ItemDetailsPage } from './pages/item-details/item-details';
 import { ItemsPage } from './pages/items/Items';
 import { green } from '@mui/material/colors';
@@ -40,17 +40,11 @@ export const App: React.FC = () => {
             </Typography>
           </Toolbar>
         </AppBar>
-        <Switch>
-          <Route path="/login">
-            <LoginPage />
-          </Route>
-          <Route path='/items/:type'>
-            <ItemsPage />
-          </Route>
-          <Route path='/item-details/:id'>
-            <ItemDetailsPage />
-          </Route>
-        </Switch>
+        <Routes>
+          <Route path="/login" element={<LoginPage />} />
+          <Route path='/items/:type' element={<ItemsPage />} />
+          <Route path='/item-details/:id' element={<ItemDetailsPage />} />
+        </Routes>
       </ThemeProvider>
     </BrowserRouter>
   );
