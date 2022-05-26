@@ -8,8 +8,8 @@ import { fetchItemByIdThunk, updateItemThunk } from "../../store/items/items.thu
 import { typedUseDispatch, typedUseSelector } from "../../store/store";
 import { Item } from "../../models/item/item.model";
 import { experimentalDataFileds } from "../../models/item/item-details-form-fields/experimental-data.fileds";
-import { setPageTitle } from "../../store/main/main.slice";
-import { SpeedDial, SpeedDialAction, SpeedDialIcon, Tab, Tabs } from "@mui/material";
+import { setPageTitle, setSpeedDialButtons } from "../../store/main/main.slice";
+import { Tab, Tabs } from "@mui/material";
 import { Cancel, Save } from '@mui/icons-material';
 import { SmartGroupController } from "../../dynamic-forms/smart-group-controller/SmartGroupsController";
 import { usewearMacroFields } from "../../models/item/usewear-form-fields/macro.fields";
@@ -49,6 +49,25 @@ export const ItemDetailsPage: React.FC = () => {
     initialEffect();
   }, [dispatch, id, selectedItem]);
 
+  useEffect(() => {
+    dispatch(setSpeedDialButtons([
+      {
+        icon: <Cancel color="error" fontSize="small" />,
+        tooltip: 'Discard changes',
+        action: () => navigation(-1)
+      },
+      {
+        icon: <Save color="primary" fontSize="medium" />,
+        tooltip: 'Save item',
+        action: saveOrUpdateItem
+      }
+    ]))
+
+    return ()=>{
+      dispatch(setSpeedDialButtons(null));
+    }
+  }, [])
+
   return (modifiedItem.current &&
     <>
       <Tabs value={selectedTabIndex} onChange={(_, tabIndex) => setSelectedTabIndex(tabIndex)} aria-label="basic tabs example">
@@ -87,14 +106,6 @@ export const ItemDetailsPage: React.FC = () => {
           </GridChildrenBottomMargin> */}
         </Grid>
       </TabContainer>
-      <SpeedDial
-        ariaLabel="menu"
-        sx={{ position: 'fixed', bottom: 32, right: 32 }}
-        icon={<SpeedDialIcon />}
-      >
-        <SpeedDialAction icon={<Cancel color="error" fontSize="small" />} tooltipTitle="Discard" onClick={() => navigation(-1)} />
-        <SpeedDialAction onClick={saveOrUpdateItem} icon={<Save color="primary" fontSize="medium" />} tooltipTitle="Save Item" />
-      </SpeedDial>
     </>
   )
 

@@ -1,20 +1,30 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { generalDialButtons } from "../../shared/general-dial-buttons";
 
 export interface MainStore {
-    pageTitle: string;
+  pageTitle: string;
+  speedDialActions: DialAction[] | null
+}
+
+export interface DialAction {
+  icon: React.ReactNode;
+  tooltip: string;
+  action: () => void;
 }
 
 const initialState: MainStore = {
-    pageTitle: 'Usewear'
+  pageTitle: 'Usewear',
+  speedDialActions: generalDialButtons
 };
 
 const mainSlice = createSlice({
-    name: 'main',
-    initialState,
-    reducers: {
-        setPageTitle: (state, action: PayloadAction<string>) => { state.pageTitle = action.payload }
-    },
+  name: 'main',
+  initialState,
+  reducers: {
+    setPageTitle: (state, action: PayloadAction<string>) => state = { ...state, pageTitle: action.payload },
+    setSpeedDialButtons: (state, action: PayloadAction<DialAction[] | null>) => state = { ...state, speedDialActions: action.payload ? action.payload : generalDialButtons }
+  },
 });
 
-export const { setPageTitle } = mainSlice.actions;
+export const { setPageTitle, setSpeedDialButtons } = mainSlice.actions;
 export const mainReducer = mainSlice.reducer;
