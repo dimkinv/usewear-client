@@ -1,13 +1,17 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
-import { typedUseSelector } from "../../store/store";
+import { Navigate, useLocation } from "react-router-dom";
+import { setFromRoute } from "../../store/login/login.slice";
+import { typedUseDispatch, typedUseSelector } from "../../store/store";
 
-export const ProtectedPage: React.FC = ()=>{
+export const ProtectedPage: React.FC = ({ children }) => {
   const auth = typedUseSelector(store => store.loginStore);
-  const navigation = useNavigate();
-  if(!auth.accessToken){
+  const dispatch = typedUseDispatch();
+  const location = useLocation();
 
+  if (!auth.accessToken) {
+    dispatch(setFromRoute(location.pathname));
+    return <Navigate to="/login" replace />
   }
 
-  return (<></>)
+  return (<>{children}</>);
 }

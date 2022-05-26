@@ -5,6 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import { store } from './store/store';
+import './utils/fetch-interceptor';
 
 ReactDOM.render(
   // FIXME: Put back strict mode once it is available

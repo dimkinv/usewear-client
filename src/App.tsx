@@ -10,6 +10,7 @@ import { typedUseSelector } from './store/store';
 import { useDispatch } from 'react-redux';
 import { fetchListOptionsThunk } from './store/items/items.thunks';
 import { LoginPage } from './pages/login/Login';
+import { ProtectedPage } from './pages/login/ProtectedPage';
 
 const darkTheme = createTheme({
   palette: {
@@ -42,8 +43,8 @@ export const App: React.FC = () => {
         </AppBar>
         <Routes>
           <Route path="/login" element={<LoginPage />} />
-          <Route path='/items/:type' element={<ItemsPage />} />
-          <Route path='/item-details/:id' element={<ItemDetailsPage />} />
+          <Route path='/items/:type' element={<ProtectedPage><ItemsPage /></ProtectedPage>} />
+          <Route path='/item-details/:id' element={<ProtectedPage><ItemDetailsPage /></ProtectedPage>} />
         </Routes>
       </ThemeProvider>
     </BrowserRouter>

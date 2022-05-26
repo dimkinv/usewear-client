@@ -1,8 +1,10 @@
 import { Box, Button, Card, CardContent, FormControl, Grid, TextField, Typography } from '@mui/material';
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { setJwtToken } from '../../utils/localstorage.service';
 import { loginThunk } from '../../store/login/login.thunk';
-import { typedUseDispatch } from '../../store/store';
+import { typedUseDispatch, typedUseSelector } from '../../store/store';
 
 const MarginedInput = styled(TextField)`
   margin: 10px 0;
@@ -14,10 +16,12 @@ export const LoginPage: React.FC = () => {
   const [password, setPassword] = useState('');
 
   const dispatch = typedUseDispatch();
+  const returnPath = typedUseSelector(state => state.loginStore.from);
+  const navigate = useNavigate();
 
   return (
     <Grid container alignItems="center" justifyContent="center">
-      <Grid md={6} xs={12}>
+      <Grid item md={6} xs={12}>
         <Card >
           <CardContent>
             <Typography variant="h5" align="center">Login</Typography>
@@ -48,12 +52,18 @@ export const LoginPage: React.FC = () => {
     </Grid>
   );
 
-  function submitClick(){
+  async function submitClick() {
     // validate
     // activate login thunk
-    dispatch(loginThunk({
-      username,
-      password
-    }));
+    try {
+      const response = await dispatch(loginThunk({
+        username,
+        password
+      })).unwrap();
+      setJwtToken(response.accessToken);
+      navigate(returnPath);
+    } catch (error) {
+      console.log(error);
+    }
   }
 }
