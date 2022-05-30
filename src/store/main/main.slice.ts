@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { generalDialButtons } from "../../shared/general-dial-buttons";
+import { IconName } from "./icon-name";
 
 export interface MainStore {
   pageTitle: string;
@@ -7,7 +8,8 @@ export interface MainStore {
 }
 
 export interface DialAction {
-  icon: React.ReactNode;
+  iconName: IconName;
+  color?: 'primary' | 'error',
   tooltip: string;
   action: () => void;
 }

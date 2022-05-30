@@ -10,7 +10,6 @@ import { Item } from "../../models/item/item.model";
 import { experimentalDataFileds } from "../../models/item/item-details-form-fields/experimental-data.fileds";
 import { setPageTitle, setSpeedDialButtons } from "../../store/main/main.slice";
 import { Tab, Tabs } from "@mui/material";
-import { Cancel, Save } from '@mui/icons-material';
 import { SmartGroupController } from "../../dynamic-forms/smart-group-controller/SmartGroupsController";
 import { usewearMacroFields } from "../../models/item/usewear-form-fields/macro.fields";
 import { SmartGroup } from "../../dynamic-forms/smart-group/SmartGroup";
@@ -18,6 +17,7 @@ import styled from "styled-components";
 import { usewearPatinaFields } from "../../models/item/usewear-form-fields/patina.fields";
 import { usewearMicroFields } from "../../models/item/usewear-form-fields/micro.fields";
 import { usewearResidueFields } from "../../models/item/usewear-form-fields/residue.fields";
+import { IconName } from "../../store/main/icon-name";
 
 const GridChildrenBottomMargin = styled(Grid)`
 > * {
@@ -52,20 +52,22 @@ export const ItemDetailsPage: React.FC = () => {
   useEffect(() => {
     dispatch(setSpeedDialButtons([
       {
-        icon: <Cancel color="error" fontSize="small" />,
+        iconName: IconName.Cancel,
+        color: 'error',
         tooltip: 'Discard changes',
         action: () => navigation(-1)
       },
       {
-        icon: <Save color="primary" fontSize="medium" />,
+        iconName: IconName.Save,
         tooltip: 'Save item',
         action: saveOrUpdateItem
       }
     ]))
 
-    return ()=>{
+    return () => {
       dispatch(setSpeedDialButtons(null));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (modifiedItem.current &&
