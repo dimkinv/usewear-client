@@ -8,7 +8,7 @@ import { fetchItemByIdThunk, updateItemThunk } from "../../store/items/items.thu
 import { typedUseDispatch, typedUseSelector } from "../../store/store";
 import { Item } from "../../models/item/item.model";
 import { experimentalDataFileds } from "../../models/item/item-details-form-fields/experimental-data.fileds";
-import { setPageTitle, setSpeedDialButtons } from "../../store/main/main.slice";
+import { setPageTitle } from "../../store/main/main.slice";
 import { Tab, Tabs } from "@mui/material";
 import { SmartGroupController } from "../../dynamic-forms/smart-group-controller/SmartGroupsController";
 import { usewearMacroFields } from "../../models/item/usewear-form-fields/macro.fields";
@@ -18,6 +18,7 @@ import { usewearPatinaFields } from "../../models/item/usewear-form-fields/patin
 import { usewearMicroFields } from "../../models/item/usewear-form-fields/micro.fields";
 import { usewearResidueFields } from "../../models/item/usewear-form-fields/residue.fields";
 import { IconName } from "../../store/main/icon-name";
+import { useDialConfig } from "../../shared/use-dial-config";
 
 const GridChildrenBottomMargin = styled(Grid)`
 > * {
@@ -37,20 +38,22 @@ export const ItemDetailsPage: React.FC = () => {
   const [selectedTabIndex, setSelectedTabIndex] = useState(0);
 
   useEffect(() => {
-    async function initialEffect() {
-      if (!selectedItem && id) {
-        const item = await dispatch(fetchItemByIdThunk(id)).unwrap();
-        modifiedItem.current = item;
-
-      }
-      dispatch(setPageTitle(`Usewear - Experimental Item ${selectedItem ? selectedItem['number'] : '???'}`));
+    async function loadItem() {
+      const item = await dispatch(fetchItemByIdThunk(id!)).unwrap();
+      modifiedItem.current = item;
     }
 
-    initialEffect();
+    if (!selectedItem && id) {
+      loadItem();
+    }
+    modifiedItem.current = selectedItem;
+    dispatch(setPageTitle(`Usewear - Experimental Item ${selectedItem ? selectedItem['number'] : '???'}`));
+
   }, [dispatch, id, selectedItem]);
 
+  const [, updateDial] = useDialConfig();
   useEffect(() => {
-    dispatch(setSpeedDialButtons([
+    updateDial([
       {
         iconName: IconName.Cancel,
         color: 'error',
@@ -61,14 +64,8 @@ export const ItemDetailsPage: React.FC = () => {
         iconName: IconName.Save,
         tooltip: 'Save item',
         action: saveOrUpdateItem
-      }
-    ]))
-
-    return () => {
-      dispatch(setSpeedDialButtons(null));
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+      }])
+  }, []);
 
   return (modifiedItem.current &&
     <>

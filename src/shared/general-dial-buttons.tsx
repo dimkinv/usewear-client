@@ -1,5 +1,5 @@
 import { IconName } from "../store/main/icon-name";
-import { DialAction } from "../store/main/main.slice";
+import { DialAction } from "./use-dial-config";
 
 export const generalDialButtons: DialAction[] = [
   {
